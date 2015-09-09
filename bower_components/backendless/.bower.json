@@ -1,0 +1,33 @@
+{
+  "name": "backendless",
+  "homepage": "https://github.com/Backendless/bower",
+  "authors": [
+    "Sebastián Osorio <svzosorio@boolinc.co>"
+  ],
+  "main": "./JS_SDK_Backendless/backendless.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "backendless"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "7dd9b7b6cb",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7dd9b7b6cb8db87fc119a1b7a12b09a3e78f665a"
+  },
+  "_source": "git://github.com/Backendless/bower.git",
+  "_target": "*",
+  "_originalSource": "backendless",
+  "_direct": true
+}
