@@ -17,15 +17,30 @@
 
         <!-- Add baby form -->
         <div class="row">
-            <form id="addbabyform" ng-show="showform" class="form-horizontal form-group col-md-4" role="form">
-                <input type="text" placeholder="Name of your baby" ng-model="babyName">
-                <input type="date" placeholder="Date of Birth" ng-model="babyBirthDate">
+            <form id="addbabyform" ng-show="showform" class="form-vertical form-group col-md-4" role="form">
+                <div class="form-group">
+                    <label for="nameOfBaby">Baby name</label>
+                    <input type="text" placeholder="Name of your baby" ng-model="baby.babyName" name="nameOfBaby">
+                </div>
+                <div class="form-group">
+                    <label for="birthDate">Birth date</label>
+                    <input type="date" placeholder="Date of Birth" ng-model="baby.babyBirthDate" name="birthData">
+                </div>
+                <div class="form-group">
+                    <label for="sexBaby">Sex</label>
+                    <select name="sexBaby" ng-model="baby.sex">
+                        <option ng-repeat="sex in sexBaby.availableOptions" value="{{sex.id}}">{{sex.name}}</option>
+                    </select>
+                </div>
                 <button type="button" class="btn btn-default" ng-click="addBaby()">Add baby</button>
             </form>
         </div> <!-- end of add baby form -->
 
         <!-- load your babies-->
-        <div class="row" ng-repeat="kid in kids">
+        <div class="container">
+            <h1>Your kids</h1>
+        </div>
+        <div class="container" ng-repeat="kid in kids">
             <p>{{ kid.name }}</p>
         </div>
     </div>

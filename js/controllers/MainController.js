@@ -16,15 +16,30 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
 
     };
 
+    //Options for boy or girl in dropdown form
+    $scope.sexBaby = {
+        singleSelect: null,
+        availableOptions: [
+            {id: '1', name: 'Boy'},
+            {id: '2', name: 'Girl'}
 
+        ]
+    };
+
+    $scope.baby = {};
 
     $scope.addBaby = function(){
-        if($scope.babyName === ''){return;}
-        if($scope.babyBirthDate ===''){return;}
+        if($scope.baby.babyName === ''){return;}
+        if($scope.baby.babyBirthDate ===''){return;}
+        if($scope.baby.sex ==='') { return; }
+
+        var selectionId = $scope.baby.sex;
+        var sexOfBaby = $scope.sexBaby.availableOptions[selectionId -1].name; //minus one because array begins at 0
 
         var babyObject = new Baby({
-            name: $scope.babyName,
-            birthdate: $scope.babyBirthDate
+            name: $scope.baby.babyName,
+            birthdate: $scope.baby.babyBirthDate,
+            sex: sexOfBaby
         });
 
         var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
@@ -37,6 +52,7 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
             currentUser = angular.copy(currentUser); //remove $$hashkey added by angular
             Backendless.UserService.update(currentUser, new Backendless.Async( userUpdated, gotError ));
             $scope.kids = currentUser.kids;
+
 
             //callback functions for update user
             function gotError( err ) // see more on error handling
@@ -62,11 +78,13 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
     };
 
 
+
+    //Baby table for Backendless
     function Baby(args){
         args = args || {};
         this.name = args.name || "";
         this.birthdate = args.birthdate || "";
-
+        this.sex = args.sex || "";
     }
 
 
