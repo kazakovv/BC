@@ -20,8 +20,8 @@ app.config([
         })
         .state('main',{
             url: '/main',
-            controller: 'MainController',
-            templateUrl: 'views/main.html'
+            controller: 'KidsController',
+            templateUrl: 'views/kids.html'
         });
 
 

@@ -6,17 +6,17 @@
 </head>
 <body>
     <div class="container" data-ng-init="init()">
-        <h1>Main page </h1>
+        <h1>List of kids</h1>
 
         <!-- Add baby button-->
         <div class="row">
-            <button type="button" class="btn btn-default btn-lg" ng-click="showform = ! showform">
+            <button type="button" class="btn btn-default btn-lg" ng-click="showHideAddBaby()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add baby
             </button>
         </div> <!-- end of add baby button -->
 
         <!-- Add baby form -->
-        <div class="row">
+        <div class="container">
             <form id="addbabyform" ng-show="showform" class="form-vertical form-group col-md-4" role="form">
                 <div class="form-group">
                     <label for="nameOfBaby">Baby name</label>
@@ -27,12 +27,14 @@
                     <input type="date" placeholder="Date of Birth" ng-model="baby.babyBirthDate" name="birthData">
                 </div>
                 <div class="form-group">
+
                     <label for="sexBaby">Sex</label>
                     <select name="sexBaby" ng-model="baby.sex">
                         <option ng-repeat="sex in sexBaby.availableOptions" value="{{sex.id}}">{{sex.name}}</option>
                     </select>
+
                 </div>
-                <button type="button" class="btn btn-default" ng-click="addBaby()">Add baby</button>
+                <button type="submit" class="btn btn-default" ng-click="addBaby()">Add baby</button>
             </form>
         </div> <!-- end of add baby form -->
 

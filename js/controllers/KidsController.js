@@ -1,13 +1,15 @@
-app.controller('MainController', ['$scope', '$state', function($scope, $state) {
+app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
 
 
     $scope.init = function () {
 
         //find kids of current user
-        var currentUser = Backendless.UserService.getCurrentUser();
+        var currentUser;
 
-        if(currentUser != null){
+        if(Backendless.UserService.getCurrentUser() != null){
+            currentUser = Backendless.UserService.getCurrentUser();
             $scope.kids = currentUser.kids;
+
         } else {
             //redirect to login screen
             $state.go('login');
@@ -45,13 +47,14 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
         var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
 
         function savedBaby( baby ){
-            alert("baby saved" + baby.name);
+
+            //after you save the baby you also update the user
 
             var currentUser = Backendless.UserService.getCurrentUser();
             currentUser.kids.push(baby);
             currentUser = angular.copy(currentUser); //remove $$hashkey added by angular
             Backendless.UserService.update(currentUser, new Backendless.Async( userUpdated, gotError ));
-            $scope.kids = currentUser.kids;
+
 
 
             //callback functions for update user
@@ -64,6 +67,9 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
             function userUpdated( user )
             {
                 console.log( "user has been updated" );
+                $scope.$apply(function(){$scope.showform = false});
+                $scope.$apply(function(){$scope.kids = currentUser.kids} );
+                alert(baby.name + " added");
 
             }
         }
@@ -77,7 +83,9 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
         }
     };
 
-
+    $scope.showHideAddBaby = function(){
+      $scope.showform = ! $scope.showform;
+    };
 
     //Baby table for Backendless
     function Baby(args){
@@ -86,7 +94,5 @@ app.controller('MainController', ['$scope', '$state', function($scope, $state) {
         this.birthdate = args.birthdate || "";
         this.sex = args.sex || "";
     }
-
-
 
 }]);
