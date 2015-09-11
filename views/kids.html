@@ -42,8 +42,25 @@
         <div class="container">
             <h1>Your kids</h1>
         </div>
-        <div class="container" ng-repeat="kid in kids">
-            <p>{{ kid.name }}</p>
+        <!-- Table with kids-->
+        <div class="container">
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sex</th>
+                        <th>BirthDate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="kid in kids">
+                    <td>{{ kid.name }}</td>
+                    <td>{{ kid.sex}}</td>
+                    <td>{{kid.birthdate | date}}</td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </body>
