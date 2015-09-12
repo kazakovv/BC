@@ -50,6 +50,7 @@
                         <th>Name</th>
                         <th>Sex</th>
                         <th>BirthDate</th>
+                        <th>Born</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,7 @@
                     <td>{{ kid.name }}</td>
                     <td>{{ kid.sex}}</td>
                     <td>{{kid.birthdate | date}}</td>
+                    <td> {{calculateAge(kid.birthdate)}}</td>
                 </tr>
                 </tbody>
             </table>

@@ -30,6 +30,14 @@ app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
 
     $scope.baby = {};
 
+    $scope.calculateAge = function(dateOfBirth){
+
+        var born = moment(dateOfBirth).format("YYYMMDD");
+        var age = moment(born,"YYYYMMDD").fromNow();
+        return age;
+
+    };
+
     $scope.addBaby = function(){
         if($scope.baby.babyName === ''){return;}
         if($scope.baby.babyBirthDate ===''){return;}
