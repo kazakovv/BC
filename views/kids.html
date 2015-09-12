@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+
     <div class="container" data-ng-init="init()">
         <header-bar></header-bar>
         <h1>List of kids</h1>
@@ -18,7 +12,7 @@
 
         <!-- Add baby form -->
         <div class="container">
-            <form id="addbabyform" ng-show="showform" class="form-vertical form-group col-md-4" role="form">
+            <form id="addbabyform" ng-show="showform" class="form-vertical form-group col-md-12" role="form">
                 <div class="form-group">
                     <label for="nameOfBaby">Baby name</label>
                     <input type="text" placeholder="Name of your baby" ng-model="baby.babyName" name="nameOfBaby">
@@ -72,5 +66,3 @@
 
         </div>
     </div>
-</body>
-</html>

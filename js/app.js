@@ -22,6 +22,11 @@ app.config([
             url: '/kids',
             controller: 'KidsController',
             templateUrl: 'views/kids.html'
+        })
+        .state('data',{
+            url: '/data',
+            controller: 'DataController',
+            templateUrl: 'views/data.html'
         });
 
 
