@@ -28,6 +28,11 @@ app.config([
             controller: 'KidsController',
             templateUrl: 'views/kids.html'
         })
+        .state('editbaby',{
+             url: '/edit',
+             controller: 'EditBabyController',
+             templateUrl: 'views/editbaby.html'
+            })
         .state('data',{
             url: '/data',
             controller: 'DataController',

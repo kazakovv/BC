@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 9/12/2015.
  */
-app.controller('DataController',['$scope', '$state', function($scope, $state){
+app.controller('DataController',['$scope', '$state', 'passBaby',function($scope, $state, passBaby){
 
     $scope.init = function () {
 
@@ -19,5 +19,10 @@ app.controller('DataController',['$scope', '$state', function($scope, $state){
 
 
     };
+
+    $scope.updateBaby = function(baby){
+        passBaby.setBabyObject(baby);
+        $state.go('editbaby');
+    }
 
 }]);
