@@ -18,6 +18,11 @@ app.config([
             controller: 'SignUpController',
             templateUrl: 'views/signup.html'
         })
+        .state('dashboard',{
+            url: '/dashboard',
+            controller: 'DashboardController',
+            templateUrl: 'views/dashboard.html'
+        })
         .state('kids',{
             url: '/kids',
             controller: 'KidsController',
