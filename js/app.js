@@ -18,8 +18,8 @@ app.config([
             controller: 'SignUpController',
             templateUrl: 'views/signup.html'
         })
-        .state('main',{
-            url: '/main',
+        .state('kids',{
+            url: '/kids',
             controller: 'KidsController',
             templateUrl: 'views/kids.html'
         });

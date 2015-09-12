@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 9/8/2015.
  */
-app.controller('SignUpController', ['$scope', function($scope) {
+app.controller('SignUpController', ['$scope', '$state', function($scope,$state) {
 
     $scope.user={};
 
@@ -14,7 +14,7 @@ app.controller('SignUpController', ['$scope', function($scope) {
 
         function userRegistered( user )
         {
-            alert( "user has been registered" );
+            $state.go('kids');
         }
 
         function gotError( err ) // see more on error handling
