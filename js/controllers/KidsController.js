@@ -50,11 +50,11 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
                 values: [
                     {
                         date: "20150101",
-                        weight: 15
+                        value: 15
                     },
                     {
                         date: "20150201",
-                        weight: 17
+                        value: 17
                     }
                 ]
             };
@@ -62,11 +62,11 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
             values: [
                 {
                     date: "20170101",
-                    height: 5
+                    value: 5
                 },
                 {
                     date: "201702010",
-                    height: 7
+                    value: 7
                 }
             ]};
         //get baby table from backendlessClasses service

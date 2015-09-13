@@ -26,8 +26,18 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', function($sc
         }
 
     };
+    $scope.defaultSelection = function(){
+        //baby.dropDownOption = dropDownOptions[0];
+    };
 
     $scope.changeProperty = function(){
+            if($scope.baby.dropDownOption ==='Weight'){
+                $scope.propertyToDisplay = "weight";
+                $scope.arrayToDisplay = $scope.weights;
+            } else if ($scope.baby.dropDownOption ==='Height'){
+                $scope.propertyToDisplay = "height";
+                $scope.arrayToDisplay = $scope.heights;
+            }
 
     }
 
