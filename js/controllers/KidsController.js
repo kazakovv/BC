@@ -1,4 +1,4 @@
-app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
+app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', function($scope, $state, backendlessClasses) {
 
 
     $scope.init = function () {
@@ -58,11 +58,26 @@ app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
                     }
                 ]
             };
+        var heightOfBaby ={
+            values: [
+                {
+                    date: "20170101",
+                    height: 5
+                },
+                {
+                    date: "201702010",
+                    height: 7
+                }
+            ]};
+        //get baby table from backendlessClasses service
+        var Baby = backendlessClasses.babyTable();
+        //create a new baby object
         var babyObject = new Baby({
             name: $scope.baby.babyName,
             birthdate: $scope.baby.babyBirthDate,
             sex: sexOfBaby,
-            weight: JSON.stringify(weightOfBaby)
+            weight: JSON.stringify(weightOfBaby),
+            height: JSON.stringify(heightOfBaby)
         });
 
         var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
@@ -72,7 +87,11 @@ app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
             //after you save the baby you also update the user
 
             var currentUser = Backendless.UserService.getCurrentUser();
-            currentUser.kids.push(baby);
+            if(currentUser.kids != null){
+                currentUser.kids.push(baby);
+            } else {
+                currentUser.kids = baby;
+            }
             currentUser = angular.copy(currentUser); //remove $$hashkey added by angular
             Backendless.UserService.update(currentUser, new Backendless.Async( userUpdated, gotError ));
 
@@ -107,15 +126,5 @@ app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
     $scope.showHideAddBaby = function(){
       $scope.showform = ! $scope.showform;
     };
-
-    //Baby table for Backendless
-    function Baby(args){
-        args = args || {};
-        this.name = args.name || "";
-        this.birthdate = args.birthdate || "";
-        this.sex = args.sex || "";
-        this.weight = args.weight || "";
-        this.height = args.height || "";
-    }
 
 }]);
