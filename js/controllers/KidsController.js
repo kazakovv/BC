@@ -46,10 +46,23 @@ app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
         var selectionId = $scope.baby.sex;
         var sexOfBaby = $scope.sexBaby.availableOptions[selectionId -1].name; //minus one because array begins at 0
 
+        var weightOfBaby = {
+                values: [
+                    {
+                        date: "20150101",
+                        weight: 15
+                    },
+                    {
+                        date: "20150201",
+                        weight: 17
+                    }
+                ]
+            };
         var babyObject = new Baby({
             name: $scope.baby.babyName,
             birthdate: $scope.baby.babyBirthDate,
-            sex: sexOfBaby
+            sex: sexOfBaby,
+            weight: JSON.stringify(weightOfBaby)
         });
 
         var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
@@ -101,6 +114,8 @@ app.controller('KidsController', ['$scope', '$state', function($scope, $state) {
         this.name = args.name || "";
         this.birthdate = args.birthdate || "";
         this.sex = args.sex || "";
+        this.weight = args.weight || "";
+        this.height = args.height || "";
     }
 
 }]);
