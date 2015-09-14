@@ -30,7 +30,8 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', function($sc
 
     };
     $scope.defaultSelection = function(){
-        //baby.dropDownOption = dropDownOptions[0];
+        $scope.baby.dropDownOption = $scope.dropDownOptions[0];
+        $scope.changeProperty();
     };
 
     $scope.addButtonClick = function() {
