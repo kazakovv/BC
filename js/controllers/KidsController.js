@@ -46,29 +46,7 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
         var selectionId = $scope.baby.sex;
         var sexOfBaby = $scope.sexBaby.availableOptions[selectionId -1].name; //minus one because array begins at 0
 
-        var weightOfBaby = {
-                values: [
-                    {
-                        date: "20150101",
-                        value: 15
-                    },
-                    {
-                        date: "20150201",
-                        value: 17
-                    }
-                ]
-            };
-        var heightOfBaby ={
-            values: [
-                {
-                    date: "20170101",
-                    value: 5
-                },
-                {
-                    date: "201702010",
-                    value: 7
-                }
-            ]};
+
         //get baby table from backendlessClasses service
         var Baby = backendlessClasses.babyTable();
         //create a new baby object
@@ -76,8 +54,8 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
             name: $scope.baby.babyName,
             birthdate: $scope.baby.babyBirthDate,
             sex: sexOfBaby,
-            weight: JSON.stringify(weightOfBaby),
-            height: JSON.stringify(heightOfBaby)
+            weight: "",
+            height: ""
         });
 
         var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
