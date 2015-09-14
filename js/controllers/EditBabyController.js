@@ -23,6 +23,9 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', function($sc
             $scope.weights = weights.values;
             $scope.heights = heights.values;
 
+            //hide form for adding values. The form is shown by clicking on the add button
+            $scope.showAddButtonForm = false;
+
         }
 
     };
@@ -30,12 +33,16 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', function($sc
         //baby.dropDownOption = dropDownOptions[0];
     };
 
+    $scope.addButtonClick = function() {
+      $scope.showAddButtonForm = true;
+
+    };
     $scope.changeProperty = function(){
             if($scope.baby.dropDownOption ==='Weight'){
-                $scope.propertyToDisplay = "weight";
+
                 $scope.arrayToDisplay = $scope.weights;
             } else if ($scope.baby.dropDownOption ==='Height'){
-                $scope.propertyToDisplay = "height";
+
                 $scope.arrayToDisplay = $scope.heights;
             }
 

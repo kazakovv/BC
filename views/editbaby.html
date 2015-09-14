@@ -36,14 +36,14 @@
 
     <!-- add new values -->
     <!-- Form to add val-->
-    <div class="container">
+    <div class="container" ng-show="showAddButtonForm">
         <form id="updateBabyProperty" class="form-horizontal form-group col-md-4" role="form">
             <input id="dateUpdateProperty" type="date" class="form-control" placeholder="Date" ng-model="baby.dateUpdateProperty">
             <input id="valueUpdateProperty" type="number" class="form-control" name="valueUpdate" placeholder="{{baby.dropDownOption}}" ng-model="baby.valueUpdateProperty">
         </form>
     </div> <!-- end of div add property form-->
     <div class="container">
-        <button type="button" class="btn btn-default" aria-label="Left Align">
+        <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addButtonClick()">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add
         </button>
     </div> <!-- end of div button-->
