@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 9/12/2015.
  */
-app.controller('EditBabyController',['$scope', '$state','passBaby', function($scope,$state,passBaby){
+app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendlessClasses', function($scope,$state,passBaby, backendlessClasses){
 
     //get baby object passed from the passBaby service
     var babyObject = passBaby.getBabyObject();
@@ -32,13 +32,6 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', function($sc
             } else {
                 $scope.heights = [];
             }
-
-
-
-
-
-
-
 
             //hide form for adding values. The form is shown by clicking on the add button
             $scope.showAddButtonForm = false;
@@ -77,20 +70,39 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', function($sc
                                 },
                 ];
 
+            //update table with weights
             if($scope.baby.dropDownOption === 'Weight'){
-                //check if array exists and if not create it, else push new value
                 $scope.weights.push(dataToPush[0]);
+                babyObject.weight = JSON.stringify($scope.weights);
 
-
+            //update table with heights
             } else if ($scope.baby.dropDownOption ==='Height'){
                 $scope.heights.push(dataToPush[0]);
+                babyObject.height = JSON.stringify($scope.heights);
             }
 
             $scope.baby.dateUpdateProperty='';
             $scope.baby.valueUpdateProperty ='';
             //hide form for adding values. The form is shown by clicking on the add button
             $scope.showAddButtonForm = false;
-        }
+
+            //****** upload in backendless *****
+
+            //get baby table from backendlessClasses service
+            var Baby = backendlessClasses.babyTable();
+
+            babyObject = angular.copy(babyObject); //remove $$hashkey added by angular
+            var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
+            function gotError( err ) // see more on error handling
+            {
+                console.log( "error message - " + err.message );
+                console.log( "error code - " + err.statusCode );
+            }
+            function savedBaby(baby) {
+                alert("The data was saved");
+            }
+            // *** end of upload in backendless ***
+        } // end of add putton click function
     };
     $scope.changeProperty = function(){
             if($scope.baby.dropDownOption ==='Weight'){
