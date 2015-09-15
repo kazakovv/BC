@@ -56,11 +56,15 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
         if($scope.showAddButtonForm == false) {
             $scope.showAddButtonForm = true;
         } else {
-            //TODO upload the JSON Object
-            //if the form is shown we update the JSON array
 
-            if($scope.dateUpdateProperty ==='') { return; }
-            if($scope.valueUpdateProperty ==='')  { return; }
+            //check if date and value was updated
+            if(typeof $scope.dateUpdateProperty === 'undefined') {
+                alert("Enter a date"); return;
+            }
+            if(typeof $scope.valueUpdateProperty === 'undefined')  {
+                alert("Enter value");
+                return;
+            }
 
             var dataToPush =
                              [
@@ -106,10 +110,8 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
     };
     $scope.changeProperty = function(){
             if($scope.baby.dropDownOption ==='Weight'){
-
                 $scope.arrayToDisplay = $scope.weights;
             } else if ($scope.baby.dropDownOption ==='Height'){
-
                 $scope.arrayToDisplay = $scope.heights;
             }
 
