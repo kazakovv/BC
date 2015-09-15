@@ -50,6 +50,8 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
         //get baby table from backendlessClasses service
         var Baby = backendlessClasses.babyTable();
         //create a new baby object
+
+
         var babyObject = new Baby({
             name: $scope.baby.babyName,
             birthdate: $scope.baby.babyBirthDate,
