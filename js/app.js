@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 9/8/2015.
  */
-var app = angular.module('BabyClinic', ['ui.router']);
+var app = angular.module('BabyClinic', ['ui.router', 'nvd3']);
 
 //routes for the various pages
 app.config([
