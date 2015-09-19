@@ -1,7 +1,30 @@
-<div class="container">
+<div class="container" data-ng-init="init()">
     <header-bar></header-bar>
     <h1>Dashboard</h1>
 
-    <nvd3 options="options" data="data"></nvd3>
+    <div class="container" ng-repeat="kid in kids">
+        <!-- title name of kid -->
+        <div class="row text-center">
+            <div class="col-md-12"> <h2>{{ kid.name }} </h2> </div>
+        </div> <!--end of title row -->
+
+        <!-- weight and height tables-->
+        <div class="row">
+            <div class="row"> <!-- titles of charts -->
+                <div class="col-md-6 text-center"> <h3>Weight</h3> </div>
+                <div class="col-md-6 text-center"> <h3>Height</h3> </div>
+            </div> <!-- end of titles of charts -->
+            <div class="row"> <!-- charts-->
+                <div class="col-md-6">
+                    <nvd3 options="options" data="setWeightValues(kid)"></nvd3>
+                </div> <!-- weight chart end-->
+                <div class="col-md-6">
+                    <nvd3 options="options" data="setHeightValues(kid)"></nvd3>
+                </div> <!-- height chart end -->
+            </div> <!-- end of charts-->
+        </div> <!-- end of weight and height table-->
+
+
+    </div> <!-- end of div ng-repeat-->
 
 </div>

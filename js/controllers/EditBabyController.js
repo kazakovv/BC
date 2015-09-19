@@ -58,10 +58,10 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
         } else {
 
             //check if date and value was updated
-            if(typeof $scope.dateUpdateProperty === 'undefined') {
+            if(typeof $scope.baby.dateUpdateProperty === 'undefined') {
                 alert("Enter a date"); return;
             }
-            if(typeof $scope.valueUpdateProperty === 'undefined')  {
+            if(typeof $scope.baby.valueUpdateProperty === 'undefined')  {
                 alert("Enter value");
                 return;
             }
