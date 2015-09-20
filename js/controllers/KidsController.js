@@ -1,4 +1,5 @@
-app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', function($scope, $state, backendlessClasses) {
+app.controller('KidsController', ['$scope', '$state', '$filter', 'backendlessClasses',
+    function($scope, $state, $filter, backendlessClasses) {
 
 
     $scope.init = function () {
@@ -21,12 +22,21 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
     //Options for boy or girl in dropdown form
     $scope.sexBaby = {
         singleSelect: null,
+        numberOfSexes: 2,
         availableOptions: [
-            {id: '1', name: 'Boy'},
-            {id: '2', name: 'Girl'}
+            {id: 1, name: 'Boy'},
+            {id: 2, name: 'Girl'}
 
         ]
     };
+
+    //function for boy or girl radio button when changing it after creation
+    $scope.showSex = function() {
+        var selected = $filter('filter')($scope.sexBaby.availableOptions, {id: $scope.sexBaby.numberOfSexes});
+        return ($scope.sexBaby.numberOfSexes && selected.length) ? selected[0].name : 'Not set';
+
+    };
+
 
     $scope.baby = {};
 
