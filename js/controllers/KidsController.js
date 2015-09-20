@@ -54,7 +54,7 @@ app.controller('KidsController', ['$scope', '$state', 'backendlessClasses', func
 
         var babyObject = new Baby({
             name: $scope.baby.babyName,
-            birthdate: $scope.baby.babyBirthDate,
+            birthdate: new Date($scope.baby.babyBirthDate),
             sex: sexOfBaby,
             weight: "",
             height: ""

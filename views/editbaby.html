@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+
+<header-bar></header-bar>
+
 <div class="container" data-ng-init="init()" >
     <h1>Edit baby</h1>
-    <p>{{baby.name}}</p>
+    <h2>{{baby.name}}</h2>
 
     <!-- dropdown to select what to change-->
     <div>
@@ -17,47 +19,61 @@
     <!-- Table to populate with values-->
     <div class="container" ng-init="changeProperty()"> <!-- change property is needed to load the table values -->
         <div class="container">
-        <table class="table table-stripped" >
-            <thead>
-                <th>Date</th>
-                <th>{{baby.dropDownOption}}</th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="w in arrayToDisplay">
-                    <td>
-                        <a href="" editable-date="arrayToDisplay[$index].date">
-                        {{ w.date | date }}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="" editable-number="arrayToDisplay[$index].value">
-                            {{ w.value }}
-                        </a>
+            <table class="table table-stripped" >
+                <thead>
+                    <th>Date</th>
+                    <th>{{baby.dropDownOption}}</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="w in arrayToDisplay track by $index">
+                        <td>
+                            <a href="" editable-date="arrayToDisplay[$index].date">
+                            {{ w.date | date }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="" editable-number="arrayToDisplay[$index].value">
+                                {{ w.value }}
+                            </a>
 
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div> <!-- end of div table-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div><!-- end of div table-->
+
     <!-- add new values -->
     <!-- Form to add val-->
     <div class="container" ng-show="showAddButtonForm">
         <form id="updateBabyProperty" class="form-horizontal form-group col-md-4" role="form">
             <input id="dateUpdateProperty"
-                   type="date" class="form-control"
+                   type="date"
+                   class="form-control"
                    placeholder="Date"
                    ng-model="baby.dateUpdateProperty">
 
             <input id="valueUpdateProperty"
-                   type="number" class="form-control"
+                   type="number"
+                   class="form-control"
                    name="valueUpdate"
                    placeholder="{{baby.dropDownOption}}"
                    ng-model="baby.valueUpdateProperty">
         </form>
     </div> <!-- end of div add property form-->
+
     <div class="container">
-        <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addButtonClick()">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add
-        </button>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addButtonClick()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add
+                </button>
+            </div> <!-- end of div for add button-->
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="saveButtonClick()">
+                    <span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span>Save
+                </button>
+            </div> <!-- end of div for save button-->
+        </div> <!-- end of row div with two buttons add and save-->
     </div> <!-- end of div button-->
 </div> <!-- END of main div-->

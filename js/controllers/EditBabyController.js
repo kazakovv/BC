@@ -51,17 +51,41 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
         */
     };
 
+    $scope.saveButtonClick = function(){
+        // TODO tozi kod se povtaria v add butona. tr da se iztrie
+        //****** upload in backendless *****
+
+        //get baby table from backendlessClasses service
+        var Baby = backendlessClasses.babyTable();
+        var babyObject = $scope.baby;
+
+        babyObject = angular.copy(babyObject); //remove $$hashkey added by angular
+        var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
+        function gotError( err ) // see more on error handling
+        {
+            console.log( "error message - " + err.message );
+            console.log( "error code - " + err.statusCode );
+        }
+        function savedBaby(baby) {
+            alert("The data was saved");
+        }
+        // *** end of upload in backendless ***
+
+    };
     $scope.addButtonClick = function() {
         //if the add value form is hidden we show it
         if($scope.showAddButtonForm == false) {
             $scope.showAddButtonForm = true;
+
         } else {
 
             //check if date and value was updated
-            if(typeof $scope.baby.dateUpdateProperty === 'undefined') {
+            if(typeof $scope.baby.dateUpdateProperty === 'undefined' ||
+                $scope.baby.dateUpdateProperty === '' ) {
                 alert("Enter a date"); return;
             }
-            if(typeof $scope.baby.valueUpdateProperty === 'undefined')  {
+            if(typeof $scope.baby.valueUpdateProperty === 'undefined' ||
+                $scope.baby.valueUpdateProperty === '')  {
                 alert("Enter value");
                 return;
             }
@@ -69,7 +93,7 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
             var dataToPush =
                              [
                                 {
-                                    'date': $scope.baby.dateUpdateProperty,
+                                    'date': new Date($scope.baby.dateUpdateProperty),
                                     'value': $scope.baby.valueUpdateProperty
                                 },
                 ];
@@ -109,11 +133,15 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
         } // end of add putton click function
     };
     $scope.changeProperty = function(){
-            if($scope.baby.dropDownOption ==='Weight'){
+
+        console.log('dropdown option: ' + $scope.baby.dropDownOption);
+
+            if ($scope.baby.dropDownOption === 'Weight') {
                 $scope.arrayToDisplay = $scope.weights;
-            } else if ($scope.baby.dropDownOption ==='Height'){
+            } else if ($scope.baby.dropDownOption === 'Height') {
                 $scope.arrayToDisplay = $scope.heights;
             }
+
 
     }
 

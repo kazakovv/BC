@@ -9,6 +9,7 @@ app.controller('SignUpController', ['$scope', '$state', function($scope,$state) 
         var user = new Backendless.User();
         user.email = $scope.user.email;
         user.password = $scope.user.password;
+        user.username = $scope.user.username;
 
         Backendless.UserService.register( user, new Backendless.Async( userRegistered, gotError ) );
 

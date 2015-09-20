@@ -19,7 +19,7 @@ app.controller('LogInController', ['$scope', '$state', function($scope, $state) 
         function userLoggedInStatus( user ){
             console.log( "user has logged in" );
 
-            $state.go('kids');
+            $state.go('dashboard');
         }
         function gotError( err ){ // see more on error handling
             $('input').addClass("redBorder");
