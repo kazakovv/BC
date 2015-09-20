@@ -9,17 +9,15 @@
         </div> <!--end of title row -->
 
         <!-- weight and height tables-->
-        <div class="row">
-            <div class="row"> <!-- titles of charts -->
-                <div class="col-md-6 text-center"> <h3>Weight</h3> </div>
-                <div class="col-md-6 text-center"> <h3>Height</h3> </div>
-            </div> <!-- end of titles of charts -->
+
             <div class="row"> <!-- charts-->
                 <div class="col-md-6">
-                    <nvd3 options="options" data="setWeightValues(kid)"></nvd3>
+                    <div class="col-md-6 text-center"> <h3>Weight</h3> </div>
+                    <nvd3 options="options" data="weightData[$index]"></nvd3>
                 </div> <!-- weight chart end-->
                 <div class="col-md-6">
-                    <nvd3 options="options" data="setHeightValues(kid)"></nvd3>
+                    <div class="col-md-6 text-center"> <h3>Height</h3> </div>
+                    <nvd3 options="options" data="heightData[$index]"></nvd3>
                 </div> <!-- height chart end -->
             </div> <!-- end of charts-->
         </div> <!-- end of weight and height table-->

@@ -10,19 +10,30 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
             $scope.kids = currentUser.kids;
             $scope.currentUser;
 
-            /* alternative approach of getting weights
+            /* alternative approach of getting weights and hieghts */
             $scope.weightData =[];
+            $scope.heightData = [];
             for (var i=0; i < currentUser.kids.length; i++){
-                var data = [
+                var weightData = [
+
                     {
-                        "key" : "Quantity" ,
+                        "key" : "Weight" ,
                         "bar": true,
                         "values" : JSON.parse(currentUser.kids[i].weight)
                     }];
-                $scope.weightData.push(data);
+                $scope.weightData.push(weightData);
+
+                var heightData = [
+                    {
+                        "key" : "Height" ,
+                        "bar": true,
+                        "values" : JSON.parse(currentUser.kids[i].height)
+                    }];
+                $scope.heightData.push(heightData);
+
 
             }
-            */
+
         } else {
             //redirect to login screen
             $state.go('login');
@@ -42,7 +53,11 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                 bottom: 60,
                 left: 50
             },
-            x: function(d){return Date.parse(d.date);},  //parses the date into a number format
+            x: function(d){
+                //parses the date into a number format
+
+                return Date.parse(d.date);
+            },
             y: function(d){return d.value ;},
 
             showValues: true,
@@ -53,7 +68,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
             xAxis: {
                 axisLabel: 'Date',
                 tickFormat: function(d) {
-                    return d3.time.format('%x') (new Date(d))
+                    return d3.time.format('%b %y') (new Date(d))
                 },
                 rotateLabels: 50,
                 showMaxMin: false
@@ -71,7 +86,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
 
    //function for setting the weight and height for the chart for each kid
 
-
+    /* this generates an infinite loop problem when called from the view
     $scope.setWeightValues = function(kid){
         var data = [
             {
@@ -80,7 +95,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                 "values" : JSON.parse(kid.weight)
             }];
        return data;
-    }
+    };
 
     $scope.setHeightValues = function (kid) {
 
@@ -91,5 +106,6 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                 "values" : JSON.parse(kid.height)
             }];
         return data;
-    }
+    };
+    */
 }]);
