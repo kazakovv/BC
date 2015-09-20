@@ -14,20 +14,31 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
             $scope.weightData =[];
             $scope.heightData = [];
             for (var i=0; i < currentUser.kids.length; i++){
+
+                //sort the array before we link it to the scope
+                var weightsArray = JSON.parse(currentUser.kids[i].weight);
+                weightsArray.sort(custom_sort);
+
                 var weightData = [
 
                     {
                         "key" : "Weight" ,
                         "bar": true,
-                        "values" : JSON.parse(currentUser.kids[i].weight)
+                        "values" : weightsArray
                     }];
+
+                //link the array to scope
                 $scope.weightData.push(weightData);
+
+                //sort the array before we link it to the scope
+                var heightsArray = JSON.parse(currentUser.kids[i].height);
+                heightsArray.sort(custom_sort);
 
                 var heightData = [
                     {
                         "key" : "Height" ,
                         "bar": true,
-                        "values" : JSON.parse(currentUser.kids[i].height)
+                        "values" : heightsArray
                     }];
                 $scope.heightData.push(heightData);
 
@@ -45,7 +56,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
     //the graph
     $scope.options = {
         chart: {
-            type: 'historicalBarChart',
+            type: 'lineChart',
             height: 200,
             margin : {
                 top: 20,
@@ -68,7 +79,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
             xAxis: {
                 axisLabel: 'Date',
                 tickFormat: function(d) {
-                    return d3.time.format('%b %y') (new Date(d))
+                   return d3.time.format('%Y-%m-%d') (new Date(d))
                 },
                 rotateLabels: 50,
                 showMaxMin: false
@@ -83,29 +94,9 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
         }
     };
 
+    //sort the JSON array by date before we pass it on to graph chart
+    function custom_sort(a, b) {
+        return new Date(a.date) - new Date(b.date);
+    }
 
-   //function for setting the weight and height for the chart for each kid
-
-    /* this generates an infinite loop problem when called from the view
-    $scope.setWeightValues = function(kid){
-        var data = [
-            {
-                "key" : "Weight" ,
-                "bar": true,
-                "values" : JSON.parse(kid.weight)
-            }];
-       return data;
-    };
-
-    $scope.setHeightValues = function (kid) {
-
-        var data = [
-            {
-                "key" : "Height" ,
-                "bar": true,
-                "values" : JSON.parse(kid.height)
-            }];
-        return data;
-    };
-    */
 }]);

@@ -25,7 +25,7 @@
                     <th>{{baby.dropDownOption}}</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="w in arrayToDisplay track by $index">
+                    <tr ng-repeat="w in arrayToDisplay track by $index | orderBy: 'date' ">
                         <td>
                             <a href="" editable-date="arrayToDisplay[$index].date">
                             {{ w.date | date }}
