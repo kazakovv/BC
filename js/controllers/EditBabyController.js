@@ -59,7 +59,15 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
         var Baby = backendlessClasses.babyTable();
         var babyObject = $scope.baby;
 
+        //change weight or height property of babyObject before uploading
+        if ($scope.baby.dropDownOption === 'Weight') {
+            babyObject.weight = JSON.stringify($scope.arrayToDisplay);
+        } else if ($scope.baby.dropDownOption === 'Height') {
+            babyObject.height = JSON.stringify($scope.arrayToDisplay);
+        }
+
         babyObject = angular.copy(babyObject); //remove $$hashkey added by angular
+        //upload in backendless
         var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
         function gotError( err ) // see more on error handling
         {
@@ -134,7 +142,6 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
     };
     $scope.changeProperty = function(){
 
-        console.log('dropdown option: ' + $scope.baby.dropDownOption);
 
             if ($scope.baby.dropDownOption === 'Weight') {
                 $scope.arrayToDisplay = $scope.weights;
