@@ -22,7 +22,6 @@ app.controller('KidsController', ['$scope', '$state', '$filter', 'backendlessCla
     //Options for boy or girl in dropdown form
     $scope.sexBaby = {
         singleSelect: null,
-        numberOfSexes: 2,
         availableOptions: [
             {id: 1, name: 'Boy'},
             {id: 2, name: 'Girl'}
@@ -31,9 +30,10 @@ app.controller('KidsController', ['$scope', '$state', '$filter', 'backendlessCla
     };
 
     //function for boy or girl radio button when changing it after creation
-    $scope.showSex = function() {
-        var selected = $filter('filter')($scope.sexBaby.availableOptions, {id: $scope.sexBaby.numberOfSexes});
-        return ($scope.sexBaby.numberOfSexes && selected.length) ? selected[0].name : 'Not set';
+    $scope.showSex = function(kid) {
+        var selected = $filter('filter')($scope.sexBaby.availableOptions, {id: kid.sex});
+        console.log($scope.sexBaby.numberOfSexes);
+        return (kid.sex && selected.length) ? selected[0].name : 'Not set';
 
     };
 
@@ -53,8 +53,10 @@ app.controller('KidsController', ['$scope', '$state', '$filter', 'backendlessCla
         if($scope.baby.babyBirthDate ===''){return;}
         if($scope.baby.sex ==='') { return; }
 
-        var selectionId = $scope.baby.sex;
-        var sexOfBaby = $scope.sexBaby.availableOptions[selectionId -1].name; //minus one because array begins at 0
+        //TODO change if sex needs to be recorded as Boy/Girl as opposed to 1/2
+        //var selectionId = $scope.baby.sex;
+        //var sexOfBaby = $scope.sexBaby.availableOptions[selectionId -1].name; //minus one because array begins at 0
+
 
 
         //get baby table from backendlessClasses service
@@ -65,7 +67,7 @@ app.controller('KidsController', ['$scope', '$state', '$filter', 'backendlessCla
         var babyObject = new Baby({
             name: $scope.baby.babyName,
             birthdate: new Date($scope.baby.babyBirthDate),
-            sex: sexOfBaby,
+            sex: $scope.baby.sex,
             weight: "",
             height: ""
         });

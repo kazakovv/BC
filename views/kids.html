@@ -44,7 +44,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Sex</th>
-                        <th>BirthDate</th>
+                        <th>Birth Date</th>
                         <th>Born</th>
 
                     </tr>
@@ -55,8 +55,8 @@
                         <a href="" editable-text="kids[$index].name"> {{ kid.name }} </a>
                     </td>
                     <td>
-                        <a href="" editable-radiolist="sexBaby.numberOfSexes" e-ng-options="s.id as s.name for s in sexBaby.availableOptions">
-                            {{ showSex() }}
+                        <a href="" editable-radiolist="kids[$index].sex" e-ng-options="s.id as s.name for s in sexBaby.availableOptions">
+                            {{ showSex(kid) }}
                         </a>
 
                     </td>
