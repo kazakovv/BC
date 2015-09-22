@@ -29,8 +29,8 @@ app.config([
         })
         .state('kids',{
             url: '/kids',
-            controller: 'KidsController',
-            templateUrl: 'views/kids.html'
+            controller: 'CreateKidsController',
+            templateUrl: 'views/createkids.html'
         })
         .state('editbaby',{
              url: '/edit',

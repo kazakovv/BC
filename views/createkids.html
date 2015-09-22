@@ -1,0 +1,51 @@
+<header-bar></header-bar>
+<h1>List of kids</h1>
+<div class="container" ng-init="init()">
+
+    <table class="table table-bordered table-hover table-condensed">
+        <tr style="font-weight: bold">
+            <td style="width:35%">Baby Name</td>
+            <td style="width:20%">Birthdate</td>
+            <td style="width:20%">Sex</td>
+            <td style="width:25%">Edit</td>
+        </tr>
+        <tr ng-repeat="kid in kids track by $index">
+            <td>
+                <!-- editable name  -->
+            <span editable-text="kids[$index].name" e-name="name" e-form="rowform" e-required>
+              {{ kid.name || 'empty' }}
+            </span>
+            </td>
+            <td>
+                <!-- editable birthdate  -->
+            <span editable-date="kids[$index].birthdate" e-name="birthdate" e-form="rowform" >
+              {{ kid.birthdate | date}}
+            </span>
+            </td>
+            <td>
+                <!-- editable select -->
+            <span editable-select="kids[$index].sex" e-name="sex"  e-form="rowform"  e-ng-options="s.value as s.text for s in sexBaby">
+              {{ showSex(kid) }}
+            </span>
+            </td>
+            <td style="white-space: nowrap">
+                <!-- form -->
+                <form editable-form name="rowform"  ng-show="rowform.$visible" class="form-buttons form-inline" shown="babyObject == kid">
+                    <button type="submit" ng-disabled="rowform.$waiting"   class="btn btn-primary">
+                        save
+                    </button>
+                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                        cancel
+                    </button>
+                </form>
+                <div class="buttons" ng-show="!rowform.$visible">
+                    <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                    <button class="btn btn-danger" ng-click="removeKid($index)">del</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <button class="btn btn-default" ng-click="addBaby()">Add baby</button>
+    <button class="btn btn-default" ng-click="saveKids()">Save</button>
+</div> <!-- end of main div with init function-->
