@@ -80,6 +80,7 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
         };
 
 
+
         $scope.saveKids = function() {
             //data is an array that stores all the information enetered in the form
             //index gives the index in the kids array
