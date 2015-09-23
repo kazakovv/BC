@@ -3,7 +3,7 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
     function($scope, $state, $filter, backendlessClasses) {
 
 
-        $scope.init = function () {
+        var init = function () {
 
             //find kids of current user
             var currentUser;
@@ -11,7 +11,7 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
             if(Backendless.UserService.getCurrentUser() != null){
                 currentUser = Backendless.UserService.getCurrentUser();
                 //check if current user already has kids
-                if(typeof currentUser.kids[0] == null ){
+                if(currentUser.kids[0] == null ){
                     $scope.kids =[];
                 } else {
                     $scope.kids = currentUser.kids;
@@ -23,6 +23,8 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
 
 
         };
+
+        init(); //load default values
 
         $scope.sexBaby = [
             {value: 1, text: 'Boy'},
@@ -70,8 +72,11 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
                 height: ""
             });
 
+            if($scope.kids != null){
             $scope.kids.push($scope.babyObject);
-
+            } else {
+                $scope.kids = [];
+            }
         };
 
 
@@ -88,39 +93,19 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
                 var babyObject = $scope.kids[i];
                 //change the format of the date
                 babyObject.birthdate = new Date(babyObject.birthdate);
-                var foundMatch = false;
-                //check if a new kid was created or the properties of an existing one were updated
-                var currentUser = Backendless.UserService.getCurrentUser();
-                for(j=0; j< currentUser.kids.length; j++) {
-                    if(babyObject.objectId == currentUser.kids[j].objectId ){
-                        //match found only update baby object
-                        foundMatch = true;
-                        babyObject = angular.copy(babyObject); //remove $$ hash
-                        var saved = Backendless.Persistence.of(Baby).save(babyObject, new Backendless.Async(updatedBaby, gotError));
-                        function updatedBaby(baby){
-                            alert("The information about " + baby.name + " was updated");
-                        }
-                        function gotError( err ) { // see more on error handling
+                babyObject = angular.copy(babyObject); //remove $$ hash
 
-                            console.log( "error message - " + err.message );
-                            console.log( "error code - " + err.statusCode );
-                        }
-                    } //end of if statement for found match
-                }//end of inner loop with j variable for currentUser.kids array search
-
-                //if no match was found we need to upload the new baby object and create the relation
-                // with the current user
-                if(foundMatch == false) {
-                    babyObject = angular.copy(babyObject); //remove $$ hash
-                    var saved = Backendless.Persistence.of(Baby).save(babyObject, new Backendless.Async(savedBaby, gotError));
+                var saved = Backendless.Persistence.of(Baby).save(babyObject, new Backendless.Async(savedBaby, gotError));
 
                     function savedBaby(baby){
                         //baby object successfully uploaded. Now create relation with current user
+
                         if(currentUser.kids != null) {
                             currentUser.kids.push(baby);
                         } else {
                             currentUser.kids = baby;
                         }
+
                         currentUser = angular.copy(currentUser);
                         Backendless.UserService.update(currentUser, new Backendless.Async( userUpdated, gotError ));
 
@@ -139,14 +124,12 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
 
 
                     }// ***** end of successful upload of the baby object
+                function gotError( err ) { // see more on error handling
 
-                    function gotError( err ) { // see more on error handling
+                    console.log( "error message - " + err.message );
+                    console.log( "error code - " + err.statusCode );
+                } // end of error uploading the baby object
 
-                        console.log( "error message - " + err.message );
-                        console.log( "error code - " + err.statusCode );
-                    } // end of error uploading the baby object
-
-                }
 
             }//end of outer with i variable loop to go through all kids
 
