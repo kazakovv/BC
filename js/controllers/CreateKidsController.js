@@ -2,14 +2,16 @@
 app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendlessClasses',
     function($scope, $state, $filter, backendlessClasses) {
 
+        //find kids of current user
+
+        var currentUser;
 
         var init = function () {
 
-            //find kids of current user
-            var currentUser;
+
 
             if(Backendless.UserService.getCurrentUser() != null){
-                currentUser = Backendless.UserService.getCurrentUser();
+               currentUser = Backendless.UserService.getCurrentUser();
                 //check if current user already has kids
                 if(currentUser.kids[0] == null ){
                     $scope.kids =[];
@@ -80,108 +82,59 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
         };
 
 
+        $scope.saveKid = function(data, index){
 
-        $scope.saveKids = function() {
-            //data is an array that stores all the information enetered in the form
-            //index gives the index in the kids array
+            //currentUser.kids = $scope.kids;
 
-            //get baby table from backendlessClasses service
+
             var Baby = backendlessClasses.babyTable();
-            //create a new baby object
+            var babyObject = new Baby();
+            babyObject = $scope.kids[index];
 
-            //go through all kids saved in the scope
-            for(i=0; i<$scope.kids.length; i++){
-                var babyObject = $scope.kids[i];
-                //change the format of the date
-                babyObject.birthdate = new Date(babyObject.birthdate);
-                babyObject = angular.copy(babyObject); //remove $$ hash
+            babyObject.name = data.name;
+            babyObject.sex = parseInt(data.sex);
+            babyObject.birthdate = new Date(data.birthdate);
 
-                var saved = Backendless.Persistence.of(Baby).save(babyObject, new Backendless.Async(savedBaby, gotError));
-
-                    function savedBaby(baby){
-                        //baby object successfully uploaded. Now create relation with current user
-
-                        if(currentUser.kids != null) {
-                            currentUser.kids.push(baby);
-                        } else {
-                            currentUser.kids = baby;
-                        }
-
-                        currentUser = angular.copy(currentUser);
-                        Backendless.UserService.update(currentUser, new Backendless.Async( userUpdated, gotError ));
-
-                        function userUpdated( user )
-                        {
-                            console.log( "user has been updated" );
-
-                            alert(baby.name + " was successfully added to user " + user.username);
-
-                        }
-                        function gotError( err ) { // see more on error handling
-
-                            console.log( "error message - " + err.message );
-                            console.log( "error code - " + err.statusCode );
-                        } // end of error uploading the current user object
-
-
-                    }// ***** end of successful upload of the baby object
-                function gotError( err ) { // see more on error handling
-
-                    console.log( "error message - " + err.message );
-                    console.log( "error code - " + err.statusCode );
-                } // end of error uploading the baby object
-
-
-            }//end of outer with i variable loop to go through all kids
-
-
-            /*
+            babyObject = angular.copy(babyObject);
             var saved = Backendless.Persistence.of(Baby).save(babyObject, new Backendless.Async(savedBaby, gotError));
-            function savedBaby( baby ){
 
-                //after you save the baby you also update the user
-
-                var currentUser = Backendless.UserService.getCurrentUser();
-
-                if(currentUser.kids != null){
+            function savedBaby(baby){
+                //baby object uploaded now create relation with current user
+                if(currentUser.kids != null) {
                     currentUser.kids.push(baby);
                 } else {
                     currentUser.kids = baby;
                 }
-                currentUser = angular.copy(currentUser); //remove $$hashkey added by angular
 
-                //second inner async task for updating the current user
+                currentUser = angular.copy(currentUser);
                 Backendless.UserService.update(currentUser, new Backendless.Async( userUpdated, gotError ));
-
-
-
-                //callback functions for update user
-                function gotError( err ) // see more on error handling
-                {
-                    console.log( "error message - " + err.message );
-                    console.log( "error code - " + err.statusCode );
-                }
-
                 function userUpdated( user )
                 {
                     console.log( "user has been updated" );
+                    currentUser = user;
+                    //$scope.kids = user.kids;
+                    //init();
 
-                    alert(baby.name + " added");
+                    alert(baby.name + " was successfully added to user " + user.username);
 
                 }
-
-            } //****end of successfully uploading the new baby and updating the current user
-
-            function gotError( err ){ // error handling for failure to upload the new baby
-
-                if(err.code != 0){
+                function gotError( err ) { // see more on error handling
 
                     console.log( "error message - " + err.message );
                     console.log( "error code - " + err.statusCode );
-                }
+                } // end of error uploading the current user object
+
+
+            } //end of saved baby obeject async task
+
+            function gotError(err){
+                console.log("Error saving data object " +err.message);
             }
 
-            */
-        } //end of save kids function
+
+
+        }; //end of save kid function
+
+
 
     }]);

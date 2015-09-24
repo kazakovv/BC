@@ -80,6 +80,9 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
         // *** end of upload in backendless ***
 
     };
+
+
+
     $scope.addButtonClick = function() {
         //if the add value form is hidden we show it
         if($scope.showAddButtonForm == false) {
@@ -140,6 +143,7 @@ app.controller('EditBabyController',['$scope', '$state','passBaby', 'backendless
             // *** end of upload in backendless ***
         } // end of add putton click function
     };
+
     $scope.changeProperty = function(){
 
 

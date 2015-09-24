@@ -34,8 +34,8 @@ app.config([
         })
         .state('editbaby',{
              url: '/edit',
-             controller: 'EditBabyController',
-             templateUrl: 'views/editbaby.html'
+             controller: 'EditBabyProgressController',
+             templateUrl: 'views/editbabyprogress.html'
             })
         .state('data',{
             url: '/data',

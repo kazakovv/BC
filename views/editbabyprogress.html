@@ -1,0 +1,62 @@
+<header-bar></header-bar>
+
+<div class="container">
+
+    <h1>Edit baby</h1>
+    <h2>{{baby.name}}</h2>
+
+
+    <!-- dropdown to select what to change-->
+    <div>
+        Choose a property to update
+        <select data-ng-model="baby.dropDownOption"
+                data-ng-options="option for option in dropDownOptions"
+                ng-change="changeProperty()">
+        </select>
+
+    </div>
+
+
+    <!-- table with values -->
+    <table class="table table-bordered table-hover table-condensed" >
+        <tr style="font-weight: bold">
+            <td style="width:35%">Date</td>
+            <td style="width:20%">{{baby.dropDownOption}}</td>
+            <td style="width:25%">Edit</td>
+        </tr>
+        <tr ng-repeat="property in arrayToDisplay  track by $index  ">
+            <td>
+                <!-- editable date  -->
+            <span editable-date="property.date" e-name="date" e-form="rowform" e-required>
+              {{ property.date | date }}
+            </span>
+            </td>
+            <td>
+                <!-- editable value  -->
+            <span editable-number="property.value" e-name="value" e-form="rowform" >
+              {{ property.value | number}}
+            </span>
+            </td>
+            <!-- white space-->
+            <td style="white-space: nowrap">
+                <!-- form -->
+                <form editable-form name="rowform"  ng-show="rowform.$visible"   class="form-buttons form-inline" shown="newValue == property">
+                    <button type="submit" ng-disabled="rowform.$waiting"   class="btn btn-primary">
+                        save
+                    </button>
+                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                        cancel
+                    </button>
+                </form>
+                <div class="buttons" ng-show="!rowform.$visible">
+                    <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                    <button class="btn btn-danger" ng-click="removeValue($index)">del</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <button class="btn btn-default" ng-click="addValue()">Add value</button>
+    <button class="btn btn-default" ng-click="saveProperties()">Save</button>
+
+</div> <!-- end of outer div-->
