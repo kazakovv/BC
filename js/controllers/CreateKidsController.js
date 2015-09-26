@@ -46,10 +46,10 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
         // remove user
         $scope.removeKid = function(index) {
             //remove locally
-            //var babyObjectToRemove = $scope.kids[index];
+            var babyObjectToRemove = $scope.kids[index];
             $scope.kids.splice(index, 1);
 
-            /*
+
             var Baby = backendlessClasses.babyTable();
             Backendless.Persistence.of(Baby).remove(babyObjectToRemove, new Backendless.Async(removeBaby,gotError));
 
@@ -61,7 +61,7 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
             function gotError(err){
                 console.log("Error deleting baby "+err.message);
             }
-            */
+
 
 
         };
