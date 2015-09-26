@@ -8,7 +8,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
         if(Backendless.UserService.getCurrentUser() != null){
             currentUser = Backendless.UserService.getCurrentUser();
             $scope.kids = currentUser.kids;
-            $scope.currentUser;
+
 
             /* alternative approach of getting weights and hieghts */
             $scope.weightData =[];
