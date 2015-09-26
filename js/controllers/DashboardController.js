@@ -1,11 +1,11 @@
-app.controller('DashboardController',['$scope', '$state', function($scope, $state){
+app.controller('DashboardController',['$scope', '$state', function($scope, $state) {
 
     $scope.init = function () {
 
         //find kids of current user
 
 
-        if(Backendless.UserService.getCurrentUser() != null){
+        if(Backendless.UserService.getCurrentUser() != null) {
             currentUser = Backendless.UserService.getCurrentUser();
             $scope.kids = currentUser.kids;
 
@@ -13,7 +13,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
             /* alternative approach of getting weights and hieghts */
             $scope.weightData =[];
             $scope.heightData = [];
-            for (var i=0; i < currentUser.kids.length; i++){
+            for (var i=0; i < currentUser.kids.length; i++) {
 
                 //sort the array before we link it to the scope
                 var weightsArray = JSON.parse(currentUser.kids[i].weight);
@@ -22,7 +22,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                 var weightData = [
 
                     {
-                        "key" : "Weight" ,
+                        "key" : "Weight",
                         "bar": true,
                         "values" : weightsArray
                     }];
@@ -43,7 +43,7 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                 $scope.heightData.push(heightData);
 
 
-            }
+            } //end of for loop
 
         } else {
             //redirect to login screen

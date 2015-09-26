@@ -37,7 +37,6 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
 
         };
 
-        //init(); //execute the init function of page load
 
         //dropdown with options ng-click function
         $scope.changeProperty = function(){
@@ -77,7 +76,7 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
         $scope.saveProperties = function(){
 
             function changeFormatOfDates(array){
-                for(i=0; i<array.length; i++){
+                for(i=0; i< array.length; i++){
                     array[0].date = new Date(array[0].date);
                 }
 
