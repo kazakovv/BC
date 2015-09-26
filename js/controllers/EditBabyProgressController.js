@@ -9,7 +9,7 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
             "Weight",
             "Height"
         ];
-        var init = function () {
+        $scope.init = function () {
 
 
             if(typeof babyObject == "undefined"){
@@ -32,14 +32,12 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
                     $scope.heights = [];
                 }
 
-                //hide form for adding values. The form is shown by clicking on the add button
-                $scope.showAddButtonForm = false;
-
+                $scope.changeProperty();
             }
 
         };
 
-        init(); //execute the init function of page load
+        //init(); //execute the init function of page load
 
         //dropdown with options ng-click function
         $scope.changeProperty = function(){
@@ -69,9 +67,7 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
             $scope.arrayToDisplay.push($scope.newValue);
         };
 
-        $scope.saveProperties = function(){
 
-        };
 
         $scope.removeValue = function(index){
             $scope.arrayToDisplay.splice(index, 1);

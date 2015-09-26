@@ -20,7 +20,8 @@ app.controller('DataController',['$scope', '$state', 'passBaby',function($scope,
 
     };
 
-    $scope.updateBaby = function(baby){
+    $scope.updateBaby = function(baby, dropDownOption){
+        baby.dropDownOption = dropDownOption;
         passBaby.setBabyObject(baby);
         $state.go('editbaby');
     }
