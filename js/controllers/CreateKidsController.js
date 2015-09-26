@@ -46,8 +46,24 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
         // remove user
         $scope.removeKid = function(index) {
             //remove locally
+            //var babyObjectToRemove = $scope.kids[index];
             $scope.kids.splice(index, 1);
-            //todo remove from database
+
+            /*
+            var Baby = backendlessClasses.babyTable();
+            Backendless.Persistence.of(Baby).remove(babyObjectToRemove, new Backendless.Async(removeBaby,gotError));
+
+            function removeBaby(baby){
+
+                alert(baby.name + " was removed successfully");
+            }
+
+            function gotError(err){
+                console.log("Error deleting baby "+err.message);
+            }
+            */
+
+
         };
 
         // add a kid
@@ -68,7 +84,7 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
             if($scope.kids != null){
             $scope.kids.push($scope.babyObject);
             } else {
-                $scope.kids = [];
+                $scope.kids = babyObject;
             }
         };
 
@@ -76,50 +92,34 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
             //var index = $scope.kids.length -1;
             var Baby = backendlessClasses.babyTable();
             babyObject = $scope.kids[index];
+            //babyObject.birthdate = new Date(babyObject.birthdate);
             babyObject = angular.copy(babyObject);
 
-            var saved = Backendless.Persistence.of(Baby).save(babyObject, new Backendless.Async(savedBaby, gotError));
+            currentUser.kids = [];
+            currentUser.kids = $scope.kids;
+            for(i=0; i< currentUser.kids.length; i++){
+                var justDate = currentUser.kids[i].birthdate;
+                justDate = moment(justDate).format("DD/MM/YYYY");
+                currentUser.kids[i].birthdate = justDate;
+            }
+            currentUser = angular.copy(currentUser);
 
-            function savedBaby(baby) {
+            Backendless.UserService.update(currentUser, new Backendless.Async(userUpdated, gotError));
+            function userUpdated(user) {
+                console.log("user has been updated");
+                currentUser = user;
+                //$scope.kids = user.kids;
+                //init();
 
-                var babyObjectExists = false;
-                //go through the current user kids array to see if baby object exists
-                for(i=0; i< currentUser.kids.length; i++){
-                    if(currentUser.kids[i].objectId == baby.objectId ){
-                        //the relation to the baby object exists already
-                        babyObjectExists = true;
-                    }
-                }
+                alert(user.kids[index].name + " was successfully added to user " + user.username);
 
-                if(babyObjectExists == false) {
-                    currentUser.kids.push(baby);
-                    currentUser = angular.copy(currentUser);
-                    Backendless.UserService.update(currentUser, new Backendless.Async(userUpdated, gotError));
+            }
 
+            function gotError(err) {
 
-                    function userUpdated(user) {
-                        console.log("user has been updated");
-                        currentUser = user;
-                        //$scope.kids = user.kids;
-                        //init();
-
-                        alert(baby.name + " was successfully added to user " + user.username);
-
-                    }
-
-                    function gotError(err) { // see more on error handling
-
-                        console.log("error message - " + err.message);
-                        console.log("error code - " + err.statusCode);
-                    } // end of error uploading the current user object
-
-                }//end of check if baby object does not exists. And of not update current user
-            } //end of saved baby obeject async task
-
-            function gotError(err){
-                console.log("Error saving data object " +err.message);
-            } //error uploading baby object
-
+                console.log("error message - " + err.message);
+                console.log("error code - " + err.statusCode);
+            } // end of error uploading the current user object
 
         };
 

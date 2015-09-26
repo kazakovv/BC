@@ -11,6 +11,7 @@ app.factory('backendlessClasses', function(){
         this.sex = args.sex || "";
         this.weight = args.weight || "";
         this.height = args.height || "";
+        this.___class = "Baby";
     }
 
     return {
