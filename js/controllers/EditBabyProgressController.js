@@ -22,12 +22,23 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
                 if(!! babyObject.weight  ){
                     weights = JSON.parse(babyObject.weight);
                     $scope.weights = weights;
+                    //change format of dates otherwise an error is generated
+                    for(i=0;i < $scope.weights.length; i++){
+                        $scope.weights[i].date = new Date($scope.weights[i].date);
+                    }
+                    //order the array
+                    $scope.weights.sort(custom_sort);
                 } else{
                     $scope.weights = [];
                 }
                 if(!! babyObject.height  ){
                     heights = JSON.parse(babyObject.height);
                     $scope.heights = heights;
+                    //change format of dates otherwise an error is generated
+                    for(i=0; i < $scope.heights.length; i++){
+                        $scope.heights[i].date = new Date($scope.heights[i].date);
+                    }
+                    $scope.heights.sort(custom_sort);
                 } else {
                     $scope.heights = [];
                 }
@@ -85,12 +96,15 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
             //update babyObject with weights
             if($scope.baby.dropDownOption === 'Weight'){
                 $scope.weights = changeFormatOfDates($scope.weights);
-
+                //sort the array
+                $scope.weights.sort(custom_sort);
                 babyObject.weight = JSON.stringify($scope.weights);
 
                 //update table with heights
             } else if ($scope.baby.dropDownOption ==='Height'){
                 $scope.heights = changeFormatOfDates($scope.heights);
+                //sort the array
+                $scope.heights.sort(custom_sort);
                 babyObject.height = JSON.stringify($scope.heights);
             }
 
@@ -114,4 +128,11 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
 
         };
 
-}]);
+
+        //sort the JSON array by date before we pass it on to graph chart
+        function custom_sort(a, b) {
+            return new Date(a.date) - new Date(b.date);
+        }
+
+
+} ]);
