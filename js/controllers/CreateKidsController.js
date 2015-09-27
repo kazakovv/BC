@@ -15,6 +15,10 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
                     $scope.kids =[];
                 } else {
                     $scope.kids = currentUser.kids;
+                    //change format of dates
+                    for(i=0;i<$scope.kids.length; i++){
+                        $scope.kids[i].birthdate = new Date($scope.kids[i].birthdate);
+                    }
                 }
             } else {
                 //redirect to login screen

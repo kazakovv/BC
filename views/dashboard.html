@@ -1,7 +1,11 @@
-<div class="container" data-ng-init="init()">
-    <header-bar></header-bar>
-    <h1>Dashboard</h1>
 
+    <header-bar></header-bar>
+
+<div class="page-header">
+    <h1>Dashboard</h1>
+</div>
+
+<div class="container-fluid" data-ng-init="init()">
     <div class="container" ng-repeat="kid in kids">
         <!-- title name of kid -->
         <div class="row text-center">
@@ -25,6 +29,6 @@
         </div> <!-- end of weight and height table-->
 
 
-    </div> <!-- end of div ng-repeat-->
+</div> <!-- end of div ng-repeat-->
 
 </div>
