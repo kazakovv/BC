@@ -18,6 +18,89 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                 //sort the array before we link it to the scope
                 var weightsArray = JSON.parse(currentUser.kids[i].weight);
                 weightsArray.sort(custom_sort);
+                var minWeightsArray ={
+                    "key": "min Healthy Weight",
+                    "bar": true,
+                    "values": []
+                };
+                var maxWeightsArray = {
+                    "key": "max Healthy Weight",
+                    "bar": true,
+                    "values": []
+                };
+
+                var minHeightsArray ={
+                    "key": "min Healthy Height",
+                    "bar": true,
+                    "values": []
+                };
+                var maxHeightsArray = {
+                    "key": "max Healthy Height",
+                    "bar": true,
+                    "values": []
+                };
+                //set the min and max values for each data point
+
+                for(j=0; j< weightsArray.length; j++){
+
+                    var dateBorn = new Date(currentUser.kids[i].birthdate);
+                    var dateWeight = new Date( weightsArray[j].date );
+                    var months = returnNumberOfMonthsBetweenTwoDates(dateBorn,dateWeight);
+
+                    var minWeight;
+                    var maxWeight;
+                    var minHeight;
+                    var maxHeight;
+                    //set min and max values for boy and girl
+                    if(currentUser.kids[i].sex==1){
+                       //boy
+                        minWeight = boyMinWeight(months);
+                        maxWeight = boyMaxWeight(months);
+                        minHeight = boyMinHeight(months);
+                        maxHeight = boyMaxHeight(months);
+
+                    } else {
+                        //girl
+                        minWeight = girlMinWeight(months);
+                        maxWeight = girlMaxWeight(months);
+                        minHeight = girlMinHeight(months);
+                        maxHeight = girlMaxHeight(months);
+                    }
+
+                    //push min and max weight values
+                    var minWeightValueToPush = {
+
+                            "date": new Date(dateWeight),
+                            "value": minWeight
+                        };
+
+                    minWeightsArray.values.push(minWeightValueToPush);
+
+                    var maxWeightValueToPush = {
+                        "date": new Date(dateWeight),
+                        "value": maxWeight
+                    };
+                    maxWeightsArray.values.push(maxWeightValueToPush);
+
+                    //push min and max height values
+
+                    var minHeightValueToPush = {
+
+                        "date": new Date(dateWeight),
+                        "value": minHeight
+                    };
+
+                    minHeightsArray.values.push(minHeightValueToPush);
+
+                    var maxHeightValueToPush = {
+                        "date": new Date(dateWeight),
+                        "value": maxHeight
+                    };
+                    maxHeightsArray.values.push(maxHeightValueToPush);
+
+
+
+                }//end of loop to set min and max weights  and heights values
 
                 var weightData = [
 
@@ -25,7 +108,8 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                         "key" : "Weight",
                         "bar": true,
                         "values" : weightsArray
-                    }];
+                    }, maxWeightsArray, minWeightsArray
+                ];
 
                 //link the array to scope
                 $scope.weightData.push(weightData);
@@ -39,12 +123,12 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
                         "key" : "Height" ,
                         "bar": true,
                         "values" : heightsArray
-                    }];
+                    }, maxHeightsArray, minHeightsArray
+                ];
                 $scope.heightData.push(heightData);
 
 
-            } //end of for loop
-
+            } //end of for loop to go through all kids
         } else {
             //redirect to login screen
             $state.go('login');
@@ -93,15 +177,25 @@ app.controller('DashboardController',['$scope', '$state', function($scope, $stat
             }
         }
     };
-
+        var returnNumberOfMonthsBetweenTwoDates = function(firstDate,secondDate){
+            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+            var daysPassed = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+            var monthsPassed = daysPassed/30.5;
+            return monthsPassed;
+        };
     $scope.returnMinAndMaxValues = function(kid, property){
+        /*
         var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 
         var birthdate = new Date(kid.birthdate);
         var today = new Date();
         var daysPassed = Math.round(Math.abs((birthdate.getTime() - today.getTime())/(oneDay)));
         var monthsSinceBirthday = Math.round (daysPassed/30.5);
+        */
 
+        var birthdate = new Date(kid.birthdate);
+        var today = new Date();
+        var monthsSinceBirthday = returnNumberOfMonthsBetweenTwoDates(birthdate, today);
         var minWeight;
         var maxWeight;
 

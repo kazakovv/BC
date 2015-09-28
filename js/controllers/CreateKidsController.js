@@ -1,6 +1,6 @@
 
-app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendlessClasses',
-    function($scope, $state, $filter, backendlessClasses) {
+app.controller('CreateKidsController', ['$scope', '$state', '$filter', '$window', 'backendlessClasses',
+    function($scope, $state, $filter, $window, backendlessClasses) {
 
         //find kids of current user
 
@@ -49,24 +49,28 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', 'backendl
 
         // remove user
         $scope.removeKid = function(index) {
-            //remove locally
-            var babyObjectToRemove = $scope.kids[index];
-            $scope.kids.splice(index, 1);
+
+            var deleteKid = $window.confirm('Are you sure you want to delete ' + $scope.kids[index].name + '?');
+
+            if(deleteKid){
+                //remove locally
+                var babyObjectToRemove = $scope.kids[index];
+                $scope.kids.splice(index, 1);
 
 
-            var Baby = backendlessClasses.babyTable();
-            Backendless.Persistence.of(Baby).remove(babyObjectToRemove, new Backendless.Async(removeBaby,gotError));
+                var Baby = backendlessClasses.babyTable();0
+                Backendless.Persistence.of(Baby).remove(babyObjectToRemove, new Backendless.Async(removeBaby,gotError));
 
-            function removeBaby(baby){
+                function removeBaby(baby){
 
-                alert(baby.name + " was removed successfully");
-            }
+                    alert(babyObjectToRemove.name + " was removed successfully");
+                }
 
-            function gotError(err){
-                console.log("Error deleting baby "+err.message);
-            }
+                function gotError(err){
+                    console.log("Error deleting baby "+err.message);
+                }
 
-
+            } //end of check to confirm deletion of kid
 
         };
 
