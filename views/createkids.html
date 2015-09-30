@@ -16,13 +16,13 @@
         <tr ng-repeat="kid in kids">
             <td>
                 <!-- editable name  -->
-            <span editable-text="kid.name" e-name="name" e-form="rowform" e-required>
+            <span editable-text="kid.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"  e-required>
               {{ kid.name || 'empty' }}
             </span>
             </td>
             <td>
                 <!-- editable birthdate  -->
-            <span editable-date="kid.birthdate" e-name="birthdate" e-form="rowform" >
+            <span editable-date="kid.birthdate" e-name="birthdate" e-form="rowform" onbeforesave="checkDate($data)" e-required>
               {{ kid.birthdate | date}}
             </span>
             </td>
@@ -34,8 +34,14 @@
             </td>
             <td style="white-space: nowrap">
                 <!-- form -->
-                <form editable-form name="rowform"  ng-show="rowform.$visible" onaftersave="saveKid($index)"
-                      class="form-buttons form-inline" shown="babyObject == kid">
+                <form editable-form name="rowform"
+                      ng-show="rowform.$visible"
+                      onbeforesave="checkName($data)"
+                      onbeforesave="checkDate($data)"
+                      onaftersave="saveKid($index)"
+                      class="form-buttons form-inline"
+                      shown="babyObject == kid"
+                      novalidate>
                     <button type="submit" ng-disabled="rowform.$waiting"   class="btn btn-primary">
                         save
                     </button>

@@ -83,11 +83,9 @@ app.controller('EditBabyProgressController',['$scope', '$state','passBaby', 'bac
                 return "Please enter a date";
             }
             //check if a date before the birthday of the baby was selected
-
             var babyBirthDate = new Date($scope.baby.birthdate);
             var dateSelected = new Date(data);
             var difference =  dateSelected.getDate() - babyBirthDate.getDate();
-
 
             if(difference < 0){
                 return "The selected date is before the birthday of your baby";

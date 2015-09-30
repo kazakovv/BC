@@ -96,6 +96,23 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', '$window'
             }
         };
 
+        $scope.checkDate = function(data){
+          if(data == ''){
+              return "Please enter the birthday of your baby";
+          }
+        };
+
+        $scope.checkName = function(data){
+            var nameWithoutSpaces;
+            if(data) {
+
+                nameWithoutSpaces = data.toString().replace(" ","");
+            }
+          if(! nameWithoutSpaces || nameWithoutSpaces == ''){
+              return "Please enter a name for your baby";
+          }
+        };
+
         $scope.saveKid = function(index){
             //var index = $scope.kids.length -1;
             var Baby = backendlessClasses.babyTable();
