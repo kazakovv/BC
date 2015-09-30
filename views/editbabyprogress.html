@@ -29,29 +29,50 @@
         <tr ng-repeat="property in arrayToDisplay  track by $index  ">
             <td>
                 <!-- editable date  -->
-            <span editable-date="property.date" e-name="date" e-form="rowform" e-required>
+            <span editable-date="property.date"
+                  e-name="date"
+                  e-form="enterProgressForm"
+                  onbeforesave="checkDate($data)"
+                  e-required>
               {{ property.date | date }}
             </span>
             </td>
             <td>
                 <!-- editable value  -->
-            <span editable-number="property.value" e-name="value" e-form="rowform" >
-              {{ property.value | number}}
+            <span editable-number="property.value"
+                  e-name="value"
+                  e-form="enterProgressForm"
+                  onbeforesave="checkValue($data)"
+                  e-required>
+              {{ property.value | number }}
+
             </span>
+
+
             </td>
             <!-- white space-->
             <td style="white-space: nowrap">
                 <!-- form -->
-                <form editable-form name="rowform"  ng-show="rowform.$visible"   class="form-buttons form-inline" shown="newValue == property">
-                    <button type="submit" ng-disabled="rowform.$waiting"   class="btn btn-primary">
+                <form editable-form
+                      name="enterProgressForm"
+                      ng-show="enterProgressForm.$visible"
+                      class="form-buttons form-inline"
+                      shown="newValue == property"
+                      onbeforesave="checkDate($data)"
+                      onbeforesave="checkValue($data)"
+                      novalidate>
+                    <button type="submit" ng-disabled="enterProgressForm.$waiting" class="btn btn-primary">
                         save
                     </button>
-                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                    <button type="button"
+                            ng-disabled="enterProgressForm.$waiting"
+                            ng-click="enterProgressForm.$cancel()"
+                            class="btn btn-default">
                         cancel
                     </button>
                 </form>
-                <div class="buttons" ng-show="!rowform.$visible">
-                    <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                <div class="buttons" ng-show="!enterProgressForm.$visible">
+                    <button class="btn btn-primary" ng-click="enterProgressForm.$show()">edit</button>
                     <button class="btn btn-danger" ng-click="removeValue($index)">del</button>
                 </div>
             </td>
