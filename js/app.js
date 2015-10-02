@@ -37,6 +37,11 @@ app.config([
              controller: 'EditBabyProgressController',
              templateUrl: 'views/editbabyprogress.html'
             })
+        .state('growthrecords', {
+                url:'/growthrecords',
+                controller: 'GrowthRecordController',
+                templateUrl: 'views/growthrecord.html'
+            })
         .state('data',{
             url: '/data',
             controller: 'DataController',

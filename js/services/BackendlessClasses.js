@@ -9,8 +9,7 @@ app.factory('backendlessClasses', function(){
         this.name = args.name || "";
         this.birthdate = args.birthdate || "";
         this.sex = args.sex || "";
-        this.weight = args.weight || "";
-        this.height = args.height || "";
+        this.growthRecords = args.growthRecords || "";
         this.___class = "Baby";
     }
 

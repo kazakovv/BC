@@ -134,7 +134,7 @@ app.controller('CreateKidsController', ['$scope', '$state', '$filter', '$window'
                 console.log("user has been updated");
                 currentUser = user;
                 //$scope.kids = user.kids;
-                //init();
+                init();
 
                 alert(user.kids[index].name + " was successfully added to user " + user.username);
 

@@ -27,8 +27,9 @@
             <td style="width:25%">Edit</td>
         </tr>
         <tr ng-repeat="property in arrayToDisplay  track by $index  ">
-            <td>
+
                 <!-- editable date  -->
+            <td>
             <span editable-date="property.date"
                   e-name="date"
                   e-form="enterProgressForm"
@@ -37,7 +38,7 @@
               {{ property.date | date }}
             </span>
             </td>
-            <td>
+
                 <!-- editable value  -->
             <span editable-number="property.value"
                   e-name="value"
@@ -49,7 +50,7 @@
             </span>
 
 
-            </td>
+
             <!-- white space-->
             <td style="white-space: nowrap">
                 <!-- form -->

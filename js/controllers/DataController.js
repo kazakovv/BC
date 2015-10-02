@@ -21,9 +21,10 @@ app.controller('DataController',['$scope', '$state', 'passBaby',function($scope,
     };
 
     $scope.updateBaby = function(baby, dropDownOption){
+        //TODO remove dropDownOption
         baby.dropDownOption = dropDownOption;
         passBaby.setBabyObject(baby);
-        $state.go('editbaby');
+        $state.go('growthrecords');
     }
 
 }]);
