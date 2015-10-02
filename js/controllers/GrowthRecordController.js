@@ -26,8 +26,7 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
                         $scope.growthRecords[i].date = new Date($scope.growthRecords[i].date);
                     }
                     //order the array
-                    //TODO the array needs to be sorted by date
-                    //$scope.growthRecords.sort(custom_sort);
+                    $scope.growthRecords.sort(custom_sort);
                 } else{
                     $scope.growthRecords = [];
                 }
@@ -59,6 +58,10 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
             $scope.growthRecords.push($scope.newValue);
         };
 
+        $scope.saveArray = function(){
+          //sort the local array with the growth values on save
+            $scope.growthRecords.sort(custom_sort);
+        };
         $scope.saveProperties = function(){
 
             function changeFormatOfDates(array){
@@ -70,8 +73,8 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
             }
             //change format of weights
             changeFormatOfDates($scope.baby);
-            //todo sort array
-            //$scope.weights.sort(custom_sort);
+
+            $scope.growthRecords.sort(custom_sort);
 
             //****** upload in backendless *****
 
@@ -91,6 +94,11 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
             // *** end of upload in backendless ***
 
         };
+
+        //sort the JSON array by date before we pass it on to graph chart
+        function custom_sort(a, b) {
+            return new Date(a.date) - new Date(b.date);
+        }
 
         /**************************/
         /* check values in form  */

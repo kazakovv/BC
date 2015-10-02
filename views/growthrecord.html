@@ -74,6 +74,7 @@
                       onbeforesave="checkWeight($data)"
                       onbeforesave="checkHeight($data)"
                       onbeforesave="checkCfr($data)"
+                      onaftersave="saveArray()"
                       novalidate>
                     <button type="submit" ng-disabled="enterProgressForm.$waiting" class="btn btn-primary">
                         save

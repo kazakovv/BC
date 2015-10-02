@@ -32,11 +32,6 @@ app.config([
             controller: 'CreateKidsController',
             templateUrl: 'views/createkids.html'
         })
-        .state('editbaby',{
-             url: '/edit',
-             controller: 'EditBabyProgressController',
-             templateUrl: 'views/editbabyprogress.html'
-            })
         .state('growthrecords', {
                 url:'/growthrecords',
                 controller: 'GrowthRecordController',
