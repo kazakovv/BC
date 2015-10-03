@@ -20,11 +20,19 @@ app.controller('DataController',['$scope', '$state', 'passBaby',function($scope,
 
     };
 
-    $scope.updateBaby = function(baby, dropDownOption){
-        //TODO remove dropDownOption
-        baby.dropDownOption = dropDownOption;
+    $scope.updateBaby = function(baby,pageToForward){
+
+        //pass baby object via service
         passBaby.setBabyObject(baby);
-        $state.go('growthrecords');
+        switch (pageToForward){
+            case 'GrowthRecord':
+                $state.go('growthrecord');
+                break;
+            case 'DevelopmentRecord':
+                $state.go('developmentrecord');
+                break;
+        }
+
     }
 
 }]);

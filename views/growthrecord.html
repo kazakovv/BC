@@ -7,12 +7,12 @@
 
 
     <!-- table with values -->
-
+<div class="container-fluid">
     <table class="table table-bordered table-hover table-condensed" ng-init="init()">
         <tr style="font-weight: bold">
             <td style="width:20%">Date</td>
             <td style="width:20%">Weight</td>
-            <td style="width:20%">Height</td>
+            <td style="width:20%">Length</td>
             <td style="width:20%">Head circumference</td>
             <td style="width:20%">Edit</td>
         </tr>
@@ -39,14 +39,14 @@
                   {{ record.weight | number }}
                 </span>
             </td>
-                <!-- editable height  -->
+                <!-- editable length  -->
             <td>
-                <span editable-number="record.height"
-                      e-name="height"
+                <span editable-number="record.length"
+                      e-name="length"
                       e-form="enterProgressForm"
-                      onbeforesave="checkHeight($data)"
+                      onbeforesave="checkLength($data)"
                       e-required>
-                  {{ record.height | number }}
+                  {{ record.length | number }}
                 </span>
             </td>
                 <!-- editable head circumference  -->
@@ -72,7 +72,7 @@
                       shown="newValue == record"
                       onbeforesave="checkDate($data)"
                       onbeforesave="checkWeight($data)"
-                      onbeforesave="checkHeight($data)"
+                      onbeforesave="checkLength($data)"
                       onbeforesave="checkCfr($data)"
                       onaftersave="saveArray()"
                       novalidate>

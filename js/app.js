@@ -32,10 +32,15 @@ app.config([
             controller: 'CreateKidsController',
             templateUrl: 'views/createkids.html'
         })
-        .state('growthrecords', {
-                url:'/growthrecords',
+        .state('growthrecord', {
+                url:'/growthrecord',
                 controller: 'GrowthRecordController',
                 templateUrl: 'views/growthrecord.html'
+            })
+        .state('developmentrecord',{
+                url:'/developmentrecord',
+                controller: 'DevelopmentRecordController',
+                templateUrl: 'views/developmentrecord.html'
             })
         .state('data',{
             url: '/data',

@@ -11,15 +11,18 @@
             <tr>
                 <th>Name</th>
                 <th>Growth Record</th>
+                <th>Development Record</th>
             </tr>
             <tbody>
                 <tr ng-repeat="kid in kids">
                     <td>{{kid.name}}</td>
-                    <!-- icon for editing weight-->
+                    <!-- Growth record-->
                     <td>
-                        <a href="" ng-click="updateBaby(kid,'Weight')">
-                       Update
-                        </a>
+                        <a href="" ng-click="updateBaby(kid,'GrowthRecord')">Update</a>
+                    </td>
+                    <!-- Development Record-->
+                    <td>
+                        <a href="" ng-click="updateBaby(kid,'DevelopmentRecord')">Update</a>
                     </td>
                 </tr>
             </tbody>

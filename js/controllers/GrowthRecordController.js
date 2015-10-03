@@ -46,7 +46,7 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
             $scope.newValue = {
                 date:"",
                 weight:"",
-                height:"",
+                length:"",
                 cfr:""
             };
 
@@ -68,7 +68,6 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
                 for(i=0; i< array.length; i++){
                     array[0].date = new Date(array[0].date);
                 }
-
                 return array;
             }
             //change format of weights
@@ -130,7 +129,7 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
 
         };
 
-        $scope.checkHeight = function (data) {
+        $scope.checkLength = function (data) {
 
 
             if(data == ''){
