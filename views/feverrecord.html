@@ -1,46 +1,51 @@
-
 <header-bar></header-bar>
 
 <div class="page-header">
-    <h1>List of kids</h1>
+    <h1>Development Record</h1>
+    <h2>{{baby.name}}</h2>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-init="init()">
     <table class="table table-bordered table-hover table-condensed" >
         <tr style="font-weight: bold">
-            <td style="width:35%">Baby Name</td>
-            <td style="width:20%">Birthdate</td>
-            <td style="width:20%">Sex</td>
-            <td style="width:25%">Edit</td>
+            <td>Date and Time</td>
+            <td>Temperature</td>
+            <td>Medication</td>
+            <td>Dose</td>
+            <td>Edit</td>
         </tr>
-        <tr ng-repeat="kid in kids">
+        <tr ng-repeat="fever in fevers">
             <td>
-                <!-- editable name  -->
-                <span editable-text="kid.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"  e-required>
-                  {{ kid.name || 'empty' }}
+
+                <span editable-date="fever.date" e-name="date" e-form="rowform"  e-required>
+                  {{ fever.date || 'empty' }}
                 </span>
             </td>
             <td>
-                <!-- editable birthdate  -->
-            <span editable-date="kid.birthdate" e-name="birthdate" e-form="rowform" onbeforesave="checkDate($data)" e-required>
-              {{ kid.birthdate | date}}
+
+            <span editable-number="fever.temp" e-name="temp" e-form="rowform"  e-required>
+              {{ fever.temp }}
             </span>
             </td>
             <td>
-                <!-- editable select -->
-            <span editable-select="kid.sex" e-name="sex"  e-form="rowform"  e-ng-options="s.value as s.text for s in sexBaby">
-              {{ showSex(kid) }}
+
+            <span editable-text="fever.medication" e-name="medication"  e-form="rowform">
+              {{ fever.medication }}
+            </span>
+            </td>
+
+            <td>
+
+            <span editable-text="fever.dose" e-name="dose"  e-form="rowform">
+              {{ fever.dose }}
             </span>
             </td>
             <td style="white-space: nowrap">
                 <!-- form -->
                 <form editable-form name="rowform"
                       ng-show="rowform.$visible"
-                      onbeforesave="checkName($data)"
-                      onbeforesave="checkDate($data)"
-                      onaftersave="saveKid($index)"
                       class="form-buttons form-inline"
-                      shown="babyObject == kid"
+                      shown="feverObject == fever"
                       novalidate>
                     <button type="submit" ng-disabled="rowform.$waiting"   class="btn btn-primary">
                         save
@@ -57,5 +62,7 @@
         </tr>
     </table>
 
-    <button class="btn btn-default" ng-click="addBaby()">Add baby</button>
-</div> <!-- end of container fluid main container-->
+    <button class="btn btn-default" ng-click="addFever()">Add fever record</button>
+
+
+</div> <!-- end of main div-->

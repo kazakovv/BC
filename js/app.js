@@ -42,6 +42,11 @@ app.config([
                 controller: 'DevelopmentRecordController',
                 templateUrl: 'views/developmentrecord.html'
             })
+        .state('feverrecord', {
+                url:'/feverrecord',
+                controller: 'FeverRecordController',
+                templateUrl: 'views/feverrecord.html'
+            })
         .state('data',{
             url: '/data',
             controller: 'DataController',

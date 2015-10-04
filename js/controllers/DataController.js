@@ -31,6 +31,9 @@ app.controller('DataController',['$scope', '$state', 'passBaby',function($scope,
             case 'DevelopmentRecord':
                 $state.go('developmentrecord');
                 break;
+            case 'FeverRecord':
+                $state.go('feverrecord');
+                break;
         }
 
     }

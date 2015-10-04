@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Growth Record</th>
                 <th>Development Record</th>
+                <th>Fever Record</th>
             </tr>
             <tbody>
                 <tr ng-repeat="kid in kids">
@@ -23,6 +24,9 @@
                     <!-- Development Record-->
                     <td>
                         <a href="" ng-click="updateBaby(kid,'DevelopmentRecord')">Update</a>
+                    </td>
+                    <td>
+                        <a href="" ng-click="updateBaby(kid,'FeverRecord')">Update</a>
                     </td>
                 </tr>
             </tbody>
