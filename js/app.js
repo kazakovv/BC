@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 9/8/2015.
  */
-var app = angular.module('BabyClinic', ['ui.router', 'nvd3', 'xeditable']);
+var app = angular.module('BabyClinic', ['ui.router', 'nvd3', 'xeditable', 'ui.bootstrap']);
 
 app.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
