@@ -13,9 +13,25 @@ app.factory('backendlessClasses', function(){
         this.___class = "Baby";
     }
 
+    function FeverRecord(args){
+        args = args || {};
+        this.dateFever = args.dateFever || "";
+        this.timeFever = args.timeFever || "";
+        this.temp = args.temp || "";
+        this.medication = args.medication || "";
+        this.dose = args.dose || "";
+        this.___class = "FeverRecord";
+
+
+    }
+
     return {
         babyTable: function(){
             return Baby;
+        },
+
+        feverRecord: function(){
+            return FeverRecord;
         }
     };
 

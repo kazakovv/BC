@@ -15,26 +15,26 @@
             <td>Dose</td>
             <td>Edit</td>
         </tr>
-        <tr ng-repeat="fever in fevers | orderBy: ['date','time'] ">
+        <tr ng-repeat="fever in fevers track by $index | orderBy: ['dateFever','timeFever'] ">
             <td>
 
-                <span editable-bsdate="fever.date"
+                <span editable-bsdate="fever.dateFever"
                       e-name="date" e-form="rowform"
                       onbeforesave="checkDate($data)"
                       e-required>
-                  {{ fever.date | date:'dd-MM-yyyy' }}
+                  {{ fever.dateFever | date:'dd-MM-yyyy' }}
                 </span>
 
             </td>
 
             <td>
-                <span editable-bstime="fever.time"
+                <span editable-bstime="fever.timeFever"
                       e-name="time" e-form="rowform"
                       e-show-meridian="false"
                       e-minute-step="10"
                       onbeforesave="checkTime($data)"
                       e-required>
-                  {{ fever.time | date:'HH:mm' }}
+                  {{ fever.timeFever | date:'HH:mm' }}
                 </span>
             </td>
 

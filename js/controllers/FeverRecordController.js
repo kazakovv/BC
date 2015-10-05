@@ -13,12 +13,14 @@ app.controller('FeverRecordController',['$scope', '$state','passBaby', 'backendl
             }  else {
                 //Load fever record it exists
                 if(!! $scope.baby.feverRecord){
-                    $scope.fevers = JSON.parse($scope.baby.feverRecord);
+
+                    //$scope.fevers = JSON.parse($scope.baby.feverRecord);
+                    $scope.fevers = $scope.baby.feverRecord;
                     //reformat dates
                     for(i=0; i < $scope.fevers.length; i++){
                         //if the date is not empty reformat it
-                        if(!! $scope.fevers[i].date){
-                            $scope.fevers[i].date = new Date( $scope.fevers[i].date );
+                        if(!! $scope.fevers[i].dateFever){
+                            $scope.fevers[i].dateFever = new Date( $scope.fevers[i].dateFever );
                         }
                     }
                 } else {
@@ -32,14 +34,9 @@ app.controller('FeverRecordController',['$scope', '$state','passBaby', 'backendl
 
         };
         $scope.addFever = function(){
+            var fever =  backendlessClasses.feverRecord();
+            $scope.feverObject  = new fever;
 
-            $scope.feverObject = {
-                date:"",
-                time:"",
-                temp:"",
-                medication:"",
-                dose:""
-            };
 
             $scope.fevers.push($scope.feverObject);
 
@@ -51,7 +48,11 @@ app.controller('FeverRecordController',['$scope', '$state','passBaby', 'backendl
 
             //get baby table from backendlessClasses service
             var Baby = backendlessClasses.babyTable();
-            $scope.baby.feverRecord = JSON.stringify($scope.fevers);
+            //$scope.baby.feverRecord = JSON.stringify($scope.fevers);
+
+            $scope.fevers = angular.copy($scope.fevers);
+            $scope.baby.feverRecord = [];
+            $scope.baby.feverRecord = $scope.fevers;
             $scope.baby = angular.copy($scope.baby); //remove $$hashkey added by angular
 
             var saved = Backendless.Persistence.of( Baby ).save( $scope.baby, new Backendless.Async( savedBaby, gotError ));
