@@ -19,20 +19,19 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
 
                 $scope.baby = babyObject;
                 if(!! babyObject.growthRecords  ){
-                    growthRecords = JSON.parse(babyObject.growthRecords);
-                    $scope.growthRecords = growthRecords;
+                    $scope.growthRecords = babyObject.growthRecords;
                     //change format of dates otherwise an error is generated
                     for(i=0;i < $scope.growthRecords.length; i++){
-                        $scope.growthRecords[i].date = new Date($scope.growthRecords[i].date);
+                        $scope.growthRecords[i].dateGrowth = new Date($scope.growthRecords[i].dateGrowth);
                     }
                     //order the array
-                    $scope.growthRecords.sort(custom_sort);
+                    //$scope.growthRecords.sort(custom_sort);
                 } else{
                     $scope.growthRecords = [];
                 }
 
 
-                //$scope.changeProperty();
+
             }
 
         };
@@ -42,15 +41,8 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
 
         };
         $scope.addValue = function(){
-
-            $scope.newValue = {
-                date:"",
-                weight:"",
-                length:"",
-                cfr:""
-            };
-
-
+            var growth = backendlessClasses.growthRecords();
+            $scope.newValue = new growth;
             if($scope.growthRecords == null){
                 $scope.growthRecords = [];
             }
@@ -60,26 +52,26 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
 
         $scope.saveArray = function(){
           //sort the local array with the growth values on save
-            $scope.growthRecords.sort(custom_sort);
+            //$scope.growthRecords.sort(custom_sort);
         };
         $scope.saveProperties = function(){
 
             function changeFormatOfDates(array){
                 for(i=0; i< array.length; i++){
-                    array[0].date = new Date(array[0].date);
+                    array[0].dateGrowth = new Date(array[0].dateGrowth);
                 }
                 return array;
             }
             //change format of weights
             changeFormatOfDates($scope.baby);
 
-            $scope.growthRecords.sort(custom_sort);
+            //$scope.growthRecords.sort(custom_sort);
 
             //****** upload in backendless *****
 
             //get baby table from backendlessClasses service
             var Baby = backendlessClasses.babyTable();
-            babyObject.growthRecords = JSON.stringify($scope.growthRecords);
+            //babyObject.growthRecords = JSON.stringify($scope.growthRecords);
             babyObject = angular.copy(babyObject); //remove $$hashkey added by angular
             var saved = Backendless.Persistence.of( Baby ).save( babyObject, new Backendless.Async( savedBaby, gotError ));
             function gotError( err ) // see more on error handling

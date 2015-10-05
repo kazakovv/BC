@@ -25,6 +25,19 @@ app.factory('backendlessClasses', function(){
 
     }
 
+    function GrowthRecords(args){
+        args = args || {};
+        this.dateGrowth = args.dateGrowth || "";
+        this.weight = args.weight || "";
+        this.length = args.length || "";
+        this.cfr = args.cfr || "";
+        this.___class = "GrowthRecords";
+
+
+    }
+
+
+
     return {
         babyTable: function(){
             return Baby;
@@ -32,6 +45,9 @@ app.factory('backendlessClasses', function(){
 
         feverRecord: function(){
             return FeverRecord;
+        },
+        growthRecords: function(){
+            return GrowthRecords;
         }
     };
 
