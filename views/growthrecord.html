@@ -16,7 +16,7 @@
             <td style="width:20%">Head circumference</td>
             <td style="width:20%">Edit</td>
         </tr>
-        <tr ng-repeat="record in growthRecords  track by $index | orderBy: 'dateGrowth' ">
+        <tr ng-repeat="record in growthRecords">
 
                 <!-- editable date  -->
             <td>
@@ -74,8 +74,9 @@
                       onbeforesave="checkWeight($data)"
                       onbeforesave="checkLength($data)"
                       onbeforesave="checkCfr($data)"
-                      onaftersave="saveArray()"
+                      onaftersave="sortGrowthArray()"
                       novalidate>
+
                     <button type="submit" ng-disabled="enterProgressForm.$waiting" class="btn btn-primary">
                         save
                     </button>
