@@ -30,7 +30,13 @@ app.controller('GrowthRecordController',['$scope', '$state','passBaby', 'backend
         };
 
         $scope.removeValue = function(index){
+            var itemToRemove = $scope.growthRecords[index];
             $scope.growthRecords.splice(index, 1);
+
+            //remove from backendless
+            var growthRecordTable = backendlessClasses.growthRecords();
+            var growthRecord = Backendless.Persistence.of(growthRecordTable);
+            growthRecord.remove(itemToRemove);
 
         };
         $scope.addValue = function(){
