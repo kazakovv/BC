@@ -15,7 +15,7 @@
             <td>Dose</td>
             <td>Edit</td>
         </tr>
-        <tr ng-repeat="fever in fevers track by fever.objectId | orderBy: ['dateFever','timeFever'] ">
+        <tr ng-repeat="fever in fevers track by $index">
             <td>
 
                 <span editable-bsdate="fever.dateFever"

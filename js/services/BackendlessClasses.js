@@ -32,8 +32,14 @@ app.factory('backendlessClasses', function(){
         this.length = args.length || "";
         this.cfr = args.cfr || "";
         this.___class = "GrowthRecords";
+    }
 
-
+    function DevelopmentRecords(args){
+        args = args || {};
+        this.milestone = args.milestone || "";
+        this.dateMilestone = args.dateMilestone || "";
+        this.notes = args.notes || "";
+        this.___class = "DevelopmentRecords";
     }
 
 
@@ -48,6 +54,9 @@ app.factory('backendlessClasses', function(){
         },
         growthRecords: function(){
             return GrowthRecords;
+        },
+        developmentRecords: function(){
+            return DevelopmentRecords;
         }
     };
 

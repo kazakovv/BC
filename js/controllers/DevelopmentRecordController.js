@@ -2,8 +2,8 @@
  * Created by Victor on 10/3/2015.
  */
 
-app.controller('DevelopmentRecordController',['$scope', '$state','passBaby', 'backendlessClasses',
-    function($scope,$state,passBaby, backendlessClasses){
+app.controller('DevelopmentRecordController',['$scope', '$state', '$filter','passBaby', 'backendlessClasses',
+    function($scope,$state,$filter,passBaby, backendlessClasses){
 
         $scope.baby = passBaby.getBabyObject();
 
@@ -13,17 +13,19 @@ app.controller('DevelopmentRecordController',['$scope', '$state','passBaby', 'ba
           }  else {
               //Load milestones if they exists
               if(!! $scope.baby.milestones){
-                  $scope.milestones = JSON.parse($scope.baby.milestones);
+                  $scope.milestones = $scope.baby.milestones;
                   //reformat dates
+                  /*
                   for(i=0; i < $scope.milestones.length; i++){
                       //if the date is not empty reformat it
                       if(!! $scope.milestones[i].date){
                       $scope.milestones[i].date = new Date( $scope.milestones[i].date );
                       }
                   }
+                  */
               } else {
                   //if no milestones were saved use the empty array
-                  $scope.milestones = milestones;
+                  $scope.milestones = [];
 
               }
           }
@@ -32,7 +34,7 @@ app.controller('DevelopmentRecordController',['$scope', '$state','passBaby', 'ba
         $scope.checkDate = function (dateEntered) {
             var birthDate = new Date($scope.baby.birthdate);
             var dateUserEntered = new Date(dateEntered);
-            var difference = dateEntered.getTime() - birthDate.getTime();
+            var difference = dateUserEntered.getTime() - birthDate.getTime();
             if(difference < 0){
                 return "This is before your baby was born";
             }
@@ -60,7 +62,7 @@ app.controller('DevelopmentRecordController',['$scope', '$state','passBaby', 'ba
 
             //get baby table from backendlessClasses service
             var Baby = backendlessClasses.babyTable();
-            $scope.baby.milestones = JSON.stringify($scope.milestones);
+            $scope.baby.milestones = $scope.milestones;
             $scope.baby = angular.copy($scope.baby); //remove $$hashkey added by angular
             var saved = Backendless.Persistence.of( Baby ).save( $scope.baby, new Backendless.Async( savedBaby, gotError ));
             function gotError( err ) // see more on error handling
@@ -75,155 +77,120 @@ app.controller('DevelopmentRecordController',['$scope', '$state','passBaby', 'ba
 
         };
 
+        $scope.addMilestone = function () {
+            var milestone =  backendlessClasses.developmentRecords();
+            $scope.milestoneObject  = new milestone;
 
+
+            $scope.milestones.push($scope.milestoneObject);
+
+        };
+        $scope.removeMilestone = function(index){
+            var itemToRemove = $scope.milestones[index];
+            $scope.milestones.splice(index, 1);
+            //remove from Backendless
+            var milestonesRecordTable = backendlessClasses.developmentRecords();
+            var milestoneRecord = Backendless.Persistence.of(milestonesRecordTable);
+            milestoneRecord.remove(itemToRemove);
+
+        };
+        //method used for dropdown menu in form
+        $scope.showMilestone = function(milestone) {
+            var selected = [];
+            if(milestone.milestone) {
+                selected = $filter('filter')($scope.milestoneOptions, {value: milestone.milestone});
+            }
+            return selected.length ? selected[0].text : 'Not set';
+        };
 
         /* Development milestones*/
-        var milestones = [
+        $scope.milestoneOptions = [
             {
-                milestone:'Smiles',
-                date:'',
-                notes:''
+                value: 1, text:'Smiles'
             },
             {
-                milestone:'Makes a fist',
-                date:'',
-                notes:''
+                value: 2, text:'Makes a fist'
             },
             {
-                milestone:'Grasps onto something',
-                date:'',
-                notes:''
+                value: 3, text:'Grasps onto something'
             },
             {
-                milestone:'Uses raking grasp',
-                date:'',
-                notes:''
+                value: 4, text:'Uses raking grasp'
             },
             {
-                milestone:'Uses pincer grasp',
-                date:'',
-                notes:''
+                value: 5, text:'Uses pincer grasp'
             },
             {
-                milestone:'Transfers an object from one hand to the other',
-                date:'',
-                notes:''
+                value: 6, text:'Transfers an object from one hand to the other'
             },
             {
-                milestone:'Lifts head while on stomach',
-                date:'',
-                notes:''
+                value: 7, text:'Lifts head while on stomach'
             },
             {
-                milestone:'Eyes follow a moving object',
-                date:'',
-                notes:''
+                value: 8, text:'Eyes follow a moving object'
             },
             {
-                milestone:'Imitates movements',
-                date:'',
-                notes:''
+                value: 9, text:'Imitates movements'
             },
             {
-                milestone:'Imitates facial expressions',
-                date:'',
-                notes:''
+                value: 10, text:'Imitates facial expressions'
             },
             {
-                milestone:'recognizes mom and dad',
-                date:'',
-                notes:''
+                value: 11, text:'recognizes mom and dad'
             },
             {
-                milestone:'Responds to name',
-                date:'',
-                notes:''
+                value: 12, text:'Responds to name'
             },
             {
-                milestone:'Responds to \"no\"',
-                date:'',
-                notes:''
-            },
-
-            {
-                milestone:'Recognizes emotions by the tones of your voice',
-                date:'',
-                notes:''
+                value: 13, text:'Responds to \"no\"'
             },
             {
-                milestone:'Imitates sounds',
-                date:'',
-                notes:''
+                value: 14, text:'Recognizes emotions by the tones of your voice'
             },
             {
-                milestone:'Uses voice to express own emotions',
-                date:'',
-                notes:''
+                value: 15, text:'Imitates sounds'
             },
             {
-                milestone:'Babbles',
-                date:'',
-                notes:''
+                value: 16, text:'Uses voice to express own emotions'
             },
             {
-                milestone:'Says first word',
-                date:'',
-                notes:''
+                value: 17, text:'Babbles'
             },
             {
-                milestone:'Responds to simple requests',
-                date:'',
-                notes:''
+                value: 18, text:'Says first word'
             },
             {
-                milestone:'Finds a hidden object',
-                date:'',
-                notes:''
+                value: 19, text:'Responds to simple requests'
             },
             {
-                milestone:'Connects objects to their names',
-                date:'',
-                notes:''
+                value: 20, text:'Finds a hidden object'
             },
             {
-                milestone:'Gets first tooth',
-                date:'',
-                notes:''
+                value: 21, text:'Connects objects to their names'
             },
             {
-                milestone:'Rolls over',
-                date:'',
-                notes:''
+                value: 22, text:'Gets first tooth'
             },
             {
-                milestone:'Sits on own',
-                date:'',
-                notes:''
+                value: 23, text:'Rolls over'
             },
             {
-                milestone:'Crawls',
-                date:'',
-                notes:''
+                value: 24, text:'Sits on own'
             },
             {
-                milestone:'Pulls up to stand',
-                date:'',
-                notes:''
+                value: 25, text:'Crawls'
             },
             {
-                milestone:'Stands on own',
-                date:'',
-                notes:''
+                value: 26, text:'Pulls up to stand'
             },
             {
-                milestone:'Takes first steps with help',
-                date:'',
-                notes:''
+                value: 27, text:'Stands on own'
             },
             {
-                milestone:'Walks on own',
-                date:'',
-                notes:''
+                value: 28, text:'Takes first steps with help'
+            },
+            {
+                value: 29, text:'Walks on own'
             }
         ]
 

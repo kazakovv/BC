@@ -30,7 +30,12 @@ app.controller('FeverRecordController',['$scope', '$state','passBaby', 'backendl
             }
         };
         $scope.removeFever = function(index){
+            var itemToRemove = $scope.fevers[index];
             $scope.fevers.splice(index, 1);
+            //remove from Backendless
+            var feverRecordTable = backendlessClasses.feverRecord();
+            var feverRecord = Backendless.Persistence.of(feverRecordTable);
+            feverRecord.remove(itemToRemove);
 
         };
         $scope.addFever = function(){
